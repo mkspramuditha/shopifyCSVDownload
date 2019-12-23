@@ -106,7 +106,7 @@ class CheckoutController extends DefaultController
         $latestUpdatedDate = $dates['latest_updated_date'];
         $em = $this->getDoctrine()->getManager();
         $checkoutRepository = $this->getRepository('ShopifyCheckout');
-        var_dump($latestUpdatedDate);
+//        var_dump($latestUpdatedDate);
         for($i=1;$i<1000;$i++){
             $ch = curl_init();
 
@@ -134,7 +134,7 @@ class CheckoutController extends DefaultController
             }
             curl_close($ch);
             $orders = json_decode($result,true)['checkouts'];
-            var_dump(count($orders));
+//            var_dump(count($orders));
             if(count($orders) < 250){
 //                var_dump($i);
                 break;
@@ -183,7 +183,7 @@ class CheckoutController extends DefaultController
             }
 //            var_dump($i);
         }
-        exit;
+        return null;
 
 
     }
@@ -192,6 +192,9 @@ class CheckoutController extends DefaultController
      * @Route("/checkouts/generate/csv", name="generate_csv_checkouts")
      */
     public function generateCSV(){
+
+        $this->updateCheckouts();
+
         $orders = $this->getRepository('ShopifyCheckout')->findAll();
 
         $csvArray = array();

@@ -119,7 +119,7 @@ class OrderController extends DefaultController
     public function updateOrders(){
         $dates = $this->getRepository('ShopifyOrder')->getLatestUpdateDate();
         $latestUpdatedDate = $dates['latest_updated_date'];
-        var_dump($latestUpdatedDate);
+//        var_dump($latestUpdatedDate);
         $em = $this->getDoctrine()->getManager();
         $orderRepository = $this->getRepository('ShopifyOrder');
 
@@ -151,7 +151,7 @@ class OrderController extends DefaultController
             curl_close($ch);
 //    var_dump($result);exit;
             $orders = json_decode($result,true)['orders'];
-            var_dump(count($orders));
+//            var_dump(count($orders));
 //            var_dump(count($orders));exit;
             if(count($orders) < 250){
 //                var_dump($i);
@@ -190,7 +190,7 @@ class OrderController extends DefaultController
                 $em->flush();
             }
         }
-        exit;
+        return null;
 
 
     }
@@ -199,6 +199,9 @@ class OrderController extends DefaultController
      * @Route("/orders/generate/csv", name="generate_csv_orders")
      */
     public function generateCSV(){
+
+        $this->updateOrders();
+
         $orders = $this->getRepository('ShopifyOrder')->findAll();
 
         $orderMap = array();
