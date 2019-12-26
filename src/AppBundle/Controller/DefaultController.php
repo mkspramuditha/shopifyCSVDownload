@@ -36,6 +36,11 @@ class DefaultController extends Controller
         $number = preg_replace("/[^0-9]/", "",$number);
         $firstNumber = substr($number, 0, 1);
         $number = preg_replace("/^0+/","359",$number);
+        $query = "359";
+
+        if(substr($number, 0, strlen($query)) != $query ){
+            $number = "359".$number;
+        }
         return $number;
     }
 
