@@ -117,8 +117,8 @@ class OrderController extends DefaultController
      * @Route("/orders/update", name="update_orders")
      */
     public function updateOrders(){
-        $dates = $this->getRepository('ShopifyOrder')->getLatestUpdateDate();
-        $latestUpdatedDate = $dates['latest_updated_date'];
+        $dates = $this->getRepository('')->getLatestUpdateDate();
+        $latestUpdatedDate = $dates['latest_updated_daShopifyOrderte'];
 //        var_dump($latestUpdatedDate);
         $em = $this->getDoctrine()->getManager();
         $orderRepository = $this->getRepository('ShopifyOrder');
