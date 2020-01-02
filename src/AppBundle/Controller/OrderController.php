@@ -237,8 +237,15 @@ class OrderController extends DefaultController
             $csvLine[] = $order->getLastname();
             $csvLine[] = $order->getEmail();
             $csvLine[] = $this->getPhoneNumber($order->getPhone());
-            $csvLine[] = $this->getPhoneNumber($order->getCustomerPhone());
-            $csvLine[] = $this->getPhoneNumber($order->getShippingPhone());
+            $customerPhone =  $this->getPhoneNumber($order->getCustomerPhone());
+            $csvLine[] =$customerPhone;
+            $shippingPhone = $this->getPhoneNumber($order->getShippingPhone());
+            if($shippingPhone == ""){
+                $csvLine[] = $customerPhone;
+            }else{
+                $csvLine[] = $shippingPhone;
+            }
+
 
             $csvArray[] = $csvLine;
         }
