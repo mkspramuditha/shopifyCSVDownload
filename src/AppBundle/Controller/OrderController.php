@@ -66,7 +66,7 @@ class OrderController extends DefaultController
                         $orderObj->setOrderId($order['id']);
                         $orderObj->setCreatedAt($order['created_at']);
                         $orderObj->setUpdatedAt($order['updated_at']);
-                        $orderObj->setNumber($order['number']);
+                        $orderObj->setNumber($order['order_number']);
                         $orderObj->setCancelledAt($order['cancelled_at']);
                         $orderObj->setFulfillmentStatus($order['fulfillment_status']);
                         $orderObj->setAcceptMarketing($customer['accepts_marketing']);
@@ -169,7 +169,7 @@ class OrderController extends DefaultController
                         $orderObj->setOrderId($order['id']);
                         $orderObj->setCreatedAt($order['created_at']);
                         $orderObj->setUpdatedAt($order['updated_at']);
-                        $orderObj->setNumber($order['number']);
+                        $orderObj->setNumber($order['order_number']);
                         $orderObj->setCancelledAt($order['cancelled_at']);
                         $orderObj->setFulfillmentStatus($order['fulfillment_status']);
                         $orderObj->setAcceptMarketing($customer['accepts_marketing']);
