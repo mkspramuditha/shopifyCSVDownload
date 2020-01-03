@@ -218,7 +218,7 @@ class CheckoutController extends DefaultController
             $csvLine[] =$customerPhone;
             $shippingPhone = $this->getPhoneNumber($order->getShippingPhone());
             if($shippingPhone == ""){
-                if($customerPhone = ""){
+                if($customerPhone == ""){
                     $csvLine[] = $phone;
                 }else{
                     $csvLine[] = $customerPhone;
