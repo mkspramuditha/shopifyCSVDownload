@@ -24,7 +24,7 @@ class OrderController extends DefaultController
 //        $em->flush();
 
 
-        for($i=19;$i<1000;$i++){
+        for($i=1;$i<1000;$i++){
             $ch = curl_init();
 
             curl_setopt($ch, CURLOPT_URL, 'https://2354d58135ab061a6b441b5631a4b2b8:2feae715e670be2696d1f8f61a9a14c8@hillman.myshopify.com/admin/orders.json?created_at_min=2019-05-24T00:00:00+02:00&limit=250&status=any&page='.$i);
@@ -204,15 +204,26 @@ class OrderController extends DefaultController
 
         $orders = $this->getRepository('ShopifyOrder')->findAll();
         $orderMap = array();
+        $uniqueOrderMap = array();
         foreach ($orders as $order){
+            if(key_exists($order->getCustomerId(),$uniqueOrderMap)){
+                if($order->getCreatedAt() > $uniqueOrderMap[$order->getCustomerId()]->getCreatedAt()){
+                    $uniqueOrderMap[$order->getCustomerId()] = $order;
+                }
+            }else{
+                $uniqueOrderMap[$order->getCustomerId()] = $order;
+            }
             $orderMap[$order->getOrderId()] = $order->getCreatedAt();
         }
+
 
 
         $csvArray = array();
         $headers = array('STATUS','ORDER NUMBER','LAST ORDER DATE','TTL ORDERS','ACCEPT MARKETING','AMOUNT','FIRST NAME','LAST NAME','EMAIL','PHONE','CUSTOMER PHONE','SHIPPING PHONE');
         $csvArray[] = $headers;
-        foreach ($orders as $order){
+
+
+        foreach ($uniqueOrderMap as $order){
             $csvLine = array();
             if($order->getCancelledAt() != null){
                 $csvLine[] = "Cancelled";
