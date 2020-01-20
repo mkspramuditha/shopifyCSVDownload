@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends Controller
 {
+    protected $apiUrl = "https://2354d58135ab061a6b441b5631a4b2b8:2feae715e670be2696d1f8f61a9a14c8@hillman.myshopify.com";
 
 
     protected function getRepository($class)

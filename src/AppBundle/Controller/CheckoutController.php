@@ -27,7 +27,7 @@ class CheckoutController extends DefaultController
         for($i=1;$i<1000;$i++){
             $ch = curl_init();
 
-            curl_setopt($ch, CURLOPT_URL, 'https://2354d58135ab061a6b441b5631a4b2b8:2feae715e670be2696d1f8f61a9a14c8@hillman.myshopify.com/admin/checkouts.json?created_at_min=2019-05-24T00:00:00+02:00&limit=250&status=any&page='.$i);
+            curl_setopt($ch, CURLOPT_URL, $this->apiUrl.'/admin/checkouts.json?created_at_min=2019-05-24T00:00:00+02:00&limit=250&status=any&page='.$i);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
             curl_setopt($ch,CURLOPT_ENCODING , "gzip");
@@ -110,7 +110,7 @@ class CheckoutController extends DefaultController
         for($i=1;$i<1000;$i++){
             $ch = curl_init();
 
-            curl_setopt($ch, CURLOPT_URL, 'https://2354d58135ab061a6b441b5631a4b2b8:2feae715e670be2696d1f8f61a9a14c8@hillman.myshopify.com/admin/checkouts.json?updated_at_min='.$latestUpdatedDate.'&limit=250&status=any&page='.$i);
+            curl_setopt($ch, CURLOPT_URL, $this->apiUrl.'/admin/checkouts.json?updated_at_min='.$latestUpdatedDate.'&limit=250&status=any&page='.$i);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
             curl_setopt($ch,CURLOPT_ENCODING , "gzip");
