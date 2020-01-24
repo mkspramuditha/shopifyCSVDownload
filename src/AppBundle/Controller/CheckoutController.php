@@ -30,10 +30,10 @@ class CheckoutController extends DefaultController
 
         $em = $this->getDoctrine()->getManager();
         $orders = $this->getRepository('ShopifyCheckout')->findAll();
-        foreach ($orders as $order){
-            $em->remove($order);
-        }
-        $em->flush();
+//        foreach ($orders as $order){
+//            $em->remove($order);
+//        }
+//        $em->flush();
 
 
         for($i=1;$i<1000;$i++){
