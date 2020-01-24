@@ -7,7 +7,12 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ShopifyOrder
  *
- * @ORM\Table(name="shopify_order")
+ * @ORM\Table(name="shopify_order",
+ *       uniqueConstraints={
+ *        @ORM\UniqueConstraint(name="shop",
+ *            columns={"number", "shop"})
+ *    }
+ * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ShopifyOrderRepository")
  */
 class ShopifyOrder
@@ -22,16 +27,23 @@ class ShopifyOrder
     private $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="shop", type="integer", nullable=false)
+     */
+    private $shop;
+
+    /**
      * @var int
      *
-     * @ORM\Column(name="number", type="integer", unique=true)
+     * @ORM\Column(name="number", type="integer")
      */
     private $number;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="order_id", type="string", unique=true)
+     * @ORM\Column(name="order_id", type="string")
      */
     private $orderId;
 
@@ -562,5 +574,29 @@ class ShopifyOrder
     public function getOrderId()
     {
         return $this->orderId;
+    }
+
+    /**
+     * Set shop
+     *
+     * @param integer $shop
+     *
+     * @return ShopifyOrder
+     */
+    public function setShop($shop)
+    {
+        $this->shop = $shop;
+
+        return $this;
+    }
+
+    /**
+     * Get shop
+     *
+     * @return integer
+     */
+    public function getShop()
+    {
+        return $this->shop;
     }
 }

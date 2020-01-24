@@ -17,7 +17,14 @@
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-md-6">
-                        <a class="btn btn-success" href="{{ url('generate_csv_orders') }}">Download Orders CSV</a>
+                        <h2>Download Orders CSV</h2>
+                        <ul>
+                            {% for shop in shops %}
+                                <li>
+                                    <a class="btn btn-success btn-sm" style="margin: 10px" href="{{ url('generate_csv_orders',{shop:shop.id}) }}">{{ shop.name }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
                     </div>
                     <div class="col-md-6">
                         <a class="btn btn-success" href="{{ url('generate_csv_checkouts') }}">Download Checkouts CSV</a>

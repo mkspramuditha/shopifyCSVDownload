@@ -63,7 +63,10 @@ class DefaultController extends Controller
      * @Route("/dashboard", name="dashboard")
      */
     public function dashboardAction(Request $request){
-        return $this->render('default/index.html.twig');
+        $shops = $this->getRepository('Shop')->findAll();
+        return $this->render('default/index.html.twig',array(
+            'shops'=> $shops
+        ));
     }
 
     private function updateOrder($orderId){

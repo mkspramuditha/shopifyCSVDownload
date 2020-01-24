@@ -7,7 +7,12 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ShopifyCheckout
  *
- * @ORM\Table(name="shopify_checkout")
+ * @ORM\Table(name="shopify_checkout",
+ *     uniqueConstraints={
+ *        @ORM\UniqueConstraint(name="shop",
+ *            columns={"number", "shop"})
+ *    }
+ * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ShopifyCheckoutRepository")
  */
 class ShopifyCheckout
@@ -20,6 +25,13 @@ class ShopifyCheckout
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="shop", type="integer", nullable=false)
+     */
+    private $shop;
 
     /**
      * @var string
@@ -371,5 +383,29 @@ class ShopifyCheckout
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Set shop
+     *
+     * @param integer $shop
+     *
+     * @return ShopifyCheckout
+     */
+    public function setShop($shop)
+    {
+        $this->shop = $shop;
+
+        return $this;
+    }
+
+    /**
+     * Get shop
+     *
+     * @return integer
+     */
+    public function getShop()
+    {
+        return $this->shop;
     }
 }
