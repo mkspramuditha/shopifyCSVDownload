@@ -10,9 +10,12 @@ namespace AppBundle\Repository;
  */
 class ShopifyCheckoutRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getLatestUpdateDate(){
+    public function getLatestUpdateDate($shopId){
         $query = $this->createQueryBuilder('s');
-        $query->select('MAX(s.updatedAt) AS latest_updated_date');
+        $query->select('MAX(s.updatedAt) AS latest_updated_date')
+            ->where('s.shop = :shop')
+            ->setParameter('shop',$shopId)
+        ;
         return $query->getQuery()->getSingleResult();
 
     }

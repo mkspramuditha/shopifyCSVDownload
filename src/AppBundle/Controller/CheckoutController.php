@@ -16,6 +16,18 @@ class CheckoutController extends DefaultController
      */
     public function loadCheckoutsAction(Request $request)
     {
+
+        $shopId = $request->get('shop');
+        if($shopId == null){
+            var_dump("shop id not given");
+            exit;
+        }
+        $shop = $this->getRepository('Shop')->find($shopId);
+        if($shop == null){
+            var_dump("shop not exists");
+            exit;
+        }
+
         $em = $this->getDoctrine()->getManager();
         $orders = $this->getRepository('ShopifyCheckout')->findAll();
         foreach ($orders as $order){
@@ -27,38 +39,50 @@ class CheckoutController extends DefaultController
         for($i=1;$i<1000;$i++){
             $ch = curl_init();
 
-            curl_setopt($ch, CURLOPT_URL, $this->apiUrl.'/admin/checkouts.json?created_at_min=2019-05-24T00:00:00+02:00&limit=250&status=any&page='.$i);
+            if($shop->getCountrySelect()){
+                curl_setopt($ch, CURLOPT_URL, $shop->getUrl().'/admin/checkouts.json?created_at_min=2019-05-24T00:00:00+02:00&limit=250&status=any&page='.$i);
+            }else{
+                curl_setopt($ch, CURLOPT_URL, $shop->getUrl().'/admin/checkouts.json?limit=250&status=any&page='.$i);
+            }
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
             curl_setopt($ch,CURLOPT_ENCODING , "gzip");
 
+            $hostSplitText = explode("@",$shop->getUrl());
 
             $headers = array();
             $headers[] = 'Accept: */*';
             $headers[] = 'Accept-Encoding: gzip, deflate';
-            $headers[] = 'Authorization: Basic MjM1NGQ1ODEzNWFiMDYxYTZiNDQxYjU2MzFhNGIyYjg6MmZlYWU3MTVlNjcwYmUyNjk2ZDFmOGY2MWE5YTE0Yzg=';
+            $headers[] = 'Authorization: Basic '.base64_encode($shop->getAuthorization());
             $headers[] = 'Cache-Control: no-cache';
             $headers[] = 'Connection: keep-alive';
             $headers[] = 'Cookie: __cfduid=d98050f7affed6e9574bda5d68c32f7491571664121';
-            $headers[] = 'Host: hillman.myshopify.com';
+            $hostSplitText = explode("@",$shop->getUrl());
             $headers[] = 'Postman-Token: 38a4469f-c65b-4ac0-bdb4-0a1e911e9326,febb0004-d945-4dca-ba90-172f9631bb59';
             $headers[] = 'User-Agent: PostmanRuntime/7.20.1';
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
             $result = curl_exec($ch);
+
             if (curl_errno($ch)) {
                 echo 'Error:' . curl_error($ch);
             }
             curl_close($ch);
             $orders = json_decode($result,true)['checkouts'];
-            if(count($orders) < 250){
+            if(count($orders) == 0){
                 var_dump($i);
                 break;
             }else{
                 foreach ($orders as $order){
-                    $customer = $order['customer'];
+                    try{
+                        $customer = $order['customer'];
+                    }catch (\Exception $e){
+                        var_dump($order['id']);
+                        var_dump($e->getMessage());
+                        continue;
+                    }
 
-                    if($order['customer_locale'] == "bg"){
+                    if(!$shop->getCountrySelect() || $order['customer_locale'] == "bg"){
                         $orderObj = new ShopifyCheckout();
                         $orderObj->setNumber($order['name']);
                         $orderObj->setAbandonedDate($order['created_at']);
@@ -69,12 +93,28 @@ class CheckoutController extends DefaultController
                         $orderObj->setAcceptMarketing($customer['accepts_marketing']);
                         $orderObj->setEmail($order['email']);
                         $orderObj->setPhone($customer['accepts_marketing']);
-                        $orderObj->setPhone(str_replace(["+"," "],"",$customer['phone']));
+                        if($shop->getNumberCorrection()) {
+                            $orderObj->setPhone(str_replace(["+"," "],"",$customer['phone']));
+                        }else{
+                            $orderObj->setPhone($customer['phone']);
+                        }
+                        $orderObj->setShop($shopId);
+
                         if(array_key_exists('billing_address',$order)){
-                            $orderObj->setCustomerPhone(str_replace(["+"," "],"",$order['billing_address']['phone']));
+                            if($shop->getNumberCorrection()) {
+                                $orderObj->setCustomerPhone(str_replace(["+"," "],"",$order['billing_address']['phone']));
+                            }else{
+                                $orderObj->setCustomerPhone($order['billing_address']['phone']);
+                            }
                         }
                         if(array_key_exists('shipping_address',$order)){
-                            $orderObj->setShippingPhone(str_replace(["+"," "],"",$order['shipping_address']['phone']));
+                            if($shop->getNumberCorrection()) {
+                                $orderObj->setShippingPhone(str_replace(["+"," "],"",$order['shipping_address']['phone']));
+
+                            }else{
+                                $orderObj->setShippingPhone($order['shipping_address']['phone']);
+
+                            }
                         }
                         try{
                             if (!$em->isOpen()) {
@@ -100,9 +140,18 @@ class CheckoutController extends DefaultController
     /**
      * @Route("/checkout/update", name="update_checkouts")
      */
-    public function updateCheckouts(){
-
-        $dates = $this->getRepository('ShopifyCheckout')->getLatestUpdateDate();
+    public function updateCheckouts(Request $request){
+        $shopId = $request->get('shop');
+        if($shopId == null){
+            var_dump("shop id not given");
+            exit;
+        }
+        $shop = $this->getRepository('Shop')->find($shopId);
+        if($shop == null){
+            var_dump("shop not exists");
+            exit;
+        }
+        $dates = $this->getRepository('ShopifyCheckout')->getLatestUpdateDate($shopId);
         $latestUpdatedDate = $dates['latest_updated_date'];
         $em = $this->getDoctrine()->getManager();
         $checkoutRepository = $this->getRepository('ShopifyCheckout');
@@ -110,20 +159,21 @@ class CheckoutController extends DefaultController
         for($i=1;$i<1000;$i++){
             $ch = curl_init();
 
-            curl_setopt($ch, CURLOPT_URL, $this->apiUrl.'/admin/checkouts.json?updated_at_min='.$latestUpdatedDate.'&limit=250&status=any&page='.$i);
+            curl_setopt($ch, CURLOPT_URL, $shop->getUrl().'/admin/checkouts.json?updated_at_min='.$latestUpdatedDate.'&limit=250&status=any&page='.$i);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
             curl_setopt($ch,CURLOPT_ENCODING , "gzip");
 
+            $hostSplitText = explode("@",$shop->getUrl());
 
             $headers = array();
             $headers[] = 'Accept: */*';
             $headers[] = 'Accept-Encoding: gzip, deflate';
-            $headers[] = 'Authorization: Basic MjM1NGQ1ODEzNWFiMDYxYTZiNDQxYjU2MzFhNGIyYjg6MmZlYWU3MTVlNjcwYmUyNjk2ZDFmOGY2MWE5YTE0Yzg=';
+            $headers[] = 'Authorization: Basic '.base64_encode($shop->getAuthorization());
             $headers[] = 'Cache-Control: no-cache';
             $headers[] = 'Connection: keep-alive';
             $headers[] = 'Cookie: __cfduid=d98050f7affed6e9574bda5d68c32f7491571664121';
-            $headers[] = 'Host: hillman.myshopify.com';
+            $headers[] = 'Host: '.end($hostSplitText);
             $headers[] = 'Postman-Token: 38a4469f-c65b-4ac0-bdb4-0a1e911e9326,febb0004-d945-4dca-ba90-172f9631bb59';
             $headers[] = 'User-Agent: PostmanRuntime/7.20.1';
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -135,14 +185,14 @@ class CheckoutController extends DefaultController
             curl_close($ch);
             $orders = json_decode($result,true)['checkouts'];
 //            var_dump(count($orders));
-            if(count($orders) < 250){
+            if(count($orders) == 0){
 //                var_dump($i);
                 break;
             }else{
                 foreach ($orders as $order){
 
 
-                    if(array_key_exists('customer',$order) and $order['customer_locale'] == "bg"){
+                    if(array_key_exists('customer',$order) and (!$shop->getCountrySelect() || $order['customer_locale'] == "bg")){
                         $customer = $order['customer'];
                         $orderObj = $checkoutRepository->findOneBy(array('number'=>$order['name']));
                         if($orderObj == null){
@@ -157,13 +207,27 @@ class CheckoutController extends DefaultController
                         $orderObj->setAcceptMarketing($customer['accepts_marketing']);
                         $orderObj->setEmail($order['email']);
                         $orderObj->setPhone($customer['accepts_marketing']);
-                        $orderObj->setPhone(str_replace(["+"," "],"",$customer['phone']));
+                        if($shop->getNumberCorrection()) {
+                            $orderObj->setPhone(str_replace(["+"," "],"",$customer['phone']));
+
+                        }else{
+                            $orderObj->setPhone($customer['phone']);
+                        }
                         if(array_key_exists('billing_address',$order)){
-                            $orderObj->setCustomerPhone(str_replace(["+"," "],"",$order['billing_address']['phone']));
+                            if($shop->getNumberCorrection()) {
+                                $orderObj->setCustomerPhone(str_replace(["+"," "],"",$order['billing_address']['phone']));
+                            }else{
+                                $orderObj->setCustomerPhone($order['billing_address']['phone']);
+                            }
                         }
                         if(array_key_exists('shipping_address',$order)){
-                            $orderObj->setShippingPhone(str_replace(["+"," "],"",$order['shipping_address']['phone']));
+                            if($shop->getNumberCorrection()) {
+                                $orderObj->setShippingPhone(str_replace(["+"," "],"",$order['shipping_address']['phone']));
+                            }else{
+                                $orderObj->setShippingPhone($order['shipping_address']['phone']);
+                            }
                         }
+                        $orderObj->setShop($shopId);
 
                         try{
                             if (!$em->isOpen()) {
@@ -191,9 +255,19 @@ class CheckoutController extends DefaultController
     /**
      * @Route("/checkouts/generate/csv", name="generate_csv_checkouts")
      */
-    public function generateCSV(){
+    public function generateCSV(Request $request){
 
-        $this->updateCheckouts();
+        $shopId = $request->get('shop');
+        if($shopId == null){
+            var_dump("shop id not given");
+            exit;
+        }
+        $shop = $this->getRepository('Shop')->find($shopId);
+        if($shop == null){
+            var_dump("shop not exists");
+            exit;
+        }
+        $this->updateCheckouts($request);
 
         $orders = $this->getRepository('ShopifyCheckout')->findAll();
 
@@ -211,12 +285,19 @@ class CheckoutController extends DefaultController
             $csvLine[] = $order->getLastname();
             $csvLine[] = $order->getEmail();
 
-            $phone = $this->getPhoneNumber($order->getPhone());
+            if($shop->getNumberCorrection()) {
+                $phone = $this->getPhoneNumber($order->getPhone());
+                $customerPhone =  $this->getPhoneNumber($order->getCustomerPhone());
+                $shippingPhone = $this->getPhoneNumber($order->getShippingPhone());
+
+            }else{
+                $phone = $order->getPhone();
+                $customerPhone =  $order->getCustomerPhone();
+                $shippingPhone = $order->getShippingPhone();
+            }
 
             $csvLine[] = $phone;
-            $customerPhone =  $this->getPhoneNumber($order->getCustomerPhone());
             $csvLine[] =$customerPhone;
-            $shippingPhone = $this->getPhoneNumber($order->getShippingPhone());
             if($shippingPhone == ""){
                 if($customerPhone == ""){
                     $csvLine[] = $phone;

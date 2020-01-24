@@ -162,24 +162,23 @@ class OrderController extends DefaultController
         $latestUpdatedDate = $dates['latest_updated_date'];
         $em = $this->getDoctrine()->getManager();
         $orderRepository = $this->getRepository('ShopifyOrder');
-
         for($i=1;$i<1000;$i++){
             $ch = curl_init();
 
-            curl_setopt($ch, CURLOPT_URL, $this->apiUrl.'/admin/orders.json?updated_at_min='.$latestUpdatedDate.'&limit=250&status=any&page='.$i);
+            curl_setopt($ch, CURLOPT_URL, $shop->getUrl().'/admin/orders.json?updated_at_min='.$latestUpdatedDate.'&limit=250&status=any&page='.$i);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
             curl_setopt($ch,CURLOPT_ENCODING , "gzip");
 
-
+            $hostSplitText = explode("@",$shop->getUrl());
             $headers = array();
             $headers[] = 'Accept: */*';
             $headers[] = 'Accept-Encoding: gzip, deflate';
-            $headers[] = 'Authorization: Basic MjM1NGQ1ODEzNWFiMDYxYTZiNDQxYjU2MzFhNGIyYjg6MmZlYWU3MTVlNjcwYmUyNjk2ZDFmOGY2MWE5YTE0Yzg=';
+            $headers[] = 'Authorization: Basic '.base64_encode($shop->getAuthorization());
             $headers[] = 'Cache-Control: no-cache';
             $headers[] = 'Connection: keep-alive';
             $headers[] = 'Cookie: __cfduid=d98050f7affed6e9574bda5d68c32f7491571664121';
-            $headers[] = 'Host: hillman.myshopify.com';
+            $headers[] = 'Host: '.end($hostSplitText);
             $headers[] = 'Postman-Token: 38a4469f-c65b-4ac0-bdb4-0a1e911e9326,febb0004-d945-4dca-ba90-172f9631bb59';
             $headers[] = 'User-Agent: PostmanRuntime/7.20.1';
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -201,7 +200,7 @@ class OrderController extends DefaultController
 
                     $customer = $order['customer'];
 
-                    if($customer['default_address']['country'] == "Bulgaria"){
+                    if(!$shop->getCountrySelect() || $customer['default_address']['country'] == "Bulgaria"){
                         $orderObj = $orderRepository->findOneBy(array('orderId'=>$order['id']));
                         if($orderObj == null){
                             $orderObj = new ShopifyOrder();
