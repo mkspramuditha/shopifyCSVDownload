@@ -100,6 +100,10 @@ class CheckoutController extends DefaultController
                         }
                         $orderObj->setShop($shopId);
 
+                        if(key_exists('shipping_address',$order)){
+                            $orderObj->setShippingCountry($order['shipping_address']['country']);
+                        }
+
                         if(array_key_exists('billing_address',$order)){
                             if($shop->getNumberCorrection()) {
                                 $orderObj->setCustomerPhone(str_replace(["+"," "],"",$order['billing_address']['phone']));
@@ -207,6 +211,9 @@ class CheckoutController extends DefaultController
                         $orderObj->setAcceptMarketing($customer['accepts_marketing']);
                         $orderObj->setEmail($order['email']);
                         $orderObj->setPhone($customer['accepts_marketing']);
+                        if(key_exists('shipping_address',$order)){
+                            $orderObj->setShippingCountry($order['shipping_address']['country']);
+                        }
                         if($shop->getNumberCorrection()) {
                             $orderObj->setPhone(str_replace(["+"," "],"",$customer['phone']));
 
@@ -272,7 +279,7 @@ class CheckoutController extends DefaultController
         $orders = $this->getRepository('ShopifyCheckout')->findAll();
 
         $csvArray = array();
-        $headers = array('STATUS','ORDER NUMBER','AMOUNT ABANDONED','DATE ABANDONED','ACCEPT MARKETING','FIRST NAME','LAST NAME','EMAIL','PHONE','CUSTOMER PHONE','SHIPPING PHONE');
+        $headers = array('STATUS','ORDER NUMBER','AMOUNT ABANDONED','DATE ABANDONED','ACCEPT MARKETING','FIRST NAME','LAST NAME','EMAIL','PHONE','CUSTOMER PHONE','SHIPPING PHONE','SHIPPING COUNTRY');
         $csvArray[] = $headers;
         foreach ($orders as $order){
             $csvLine = array();
@@ -286,14 +293,14 @@ class CheckoutController extends DefaultController
             $csvLine[] = $order->getEmail();
 
             if($shop->getNumberCorrection()) {
-                $phone = $this->getPhoneNumber($order->getPhone());
-                $customerPhone =  $this->getPhoneNumber($order->getCustomerPhone());
-                $shippingPhone = $this->getPhoneNumber($order->getShippingPhone());
+                $phone = $this->getPhoneNumber($order->getPhone(),"359");
+                $customerPhone =  $this->getPhoneNumber($order->getCustomerPhone(),"359");
+                $shippingPhone = $this->getPhoneNumber($order->getShippingPhone(),"359");
 
             }else{
-                $phone = $order->getPhone();
-                $customerPhone =  $order->getCustomerPhone();
-                $shippingPhone = $order->getShippingPhone();
+                $phone = $this->getPhoneNumber($order->getPhone(),"40");
+                $customerPhone =  $this->getPhoneNumber($order->getCustomerPhone(),"40");
+                $shippingPhone = $this->getPhoneNumber($order->getShippingPhone(),"40");
             }
 
             $csvLine[] = $phone;
@@ -308,11 +315,13 @@ class CheckoutController extends DefaultController
                 $csvLine[] = $shippingPhone;
             }
 
+            $csvLine[] = $order->getShippingCountry();
+
             $csvArray[] = $csvLine;
         }
 
         header('Content-Type: text/csv');
-        header('Content-Disposition: attachment; filename="checkouts.csv"');
+        header('Content-Disposition: attachment; filename="'.$shop->getName().'checkouts.csv"');
         $fp = fopen('php://output', 'wb');
         foreach ($csvArray as $line){
             fputcsv($fp, $line);

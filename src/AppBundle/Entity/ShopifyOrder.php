@@ -76,6 +76,13 @@ class ShopifyOrder
     private $fulfillmentStatus;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="shipping_country", type="string", length=255, nullable=true)
+     */
+    private $shippingCountry;
+
+    /**
      * @var bool
      *
      * @ORM\Column(name="acceptMarketing", type="boolean")
@@ -598,5 +605,29 @@ class ShopifyOrder
     public function getShop()
     {
         return $this->shop;
+    }
+
+    /**
+     * Set shippingCountry
+     *
+     * @param string $shippingCountry
+     *
+     * @return ShopifyOrder
+     */
+    public function setShippingCountry($shippingCountry)
+    {
+        $this->shippingCountry = $shippingCountry;
+
+        return $this;
+    }
+
+    /**
+     * Get shippingCountry
+     *
+     * @return string
+     */
+    public function getShippingCountry()
+    {
+        return $this->shippingCountry;
     }
 }

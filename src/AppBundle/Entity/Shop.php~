@@ -165,4 +165,28 @@ class Shop
     {
         return $this->countrySelect;
     }
+
+    /**
+     * Set numberCorrection
+     *
+     * @param boolean $numberCorrection
+     *
+     * @return Shop
+     */
+    public function setNumberCorrection($numberCorrection)
+    {
+        $this->numberCorrection = $numberCorrection;
+
+        return $this;
+    }
+
+    /**
+     * Get numberCorrection
+     *
+     * @return boolean
+     */
+    public function getNumberCorrection()
+    {
+        return $this->numberCorrection;
+    }
 }

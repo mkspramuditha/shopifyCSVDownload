@@ -50,6 +50,13 @@ class ShopifyCheckout
     /**
      * @var string
      *
+     * @ORM\Column(name="shipping_country", type="string", length=255, nullable=true)
+     */
+    private $shippingCountry;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="abandonedDate", type="string", length=255)
      */
     private $abandonedDate;

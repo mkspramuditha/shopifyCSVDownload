@@ -50,6 +50,13 @@ class ShopifyCheckout
     /**
      * @var string
      *
+     * @ORM\Column(name="shipping_country", type="string", length=255, nullable=true)
+     */
+    private $shippingCountry;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="abandonedDate", type="string", length=255)
      */
     private $abandonedDate;
@@ -407,5 +414,29 @@ class ShopifyCheckout
     public function getShop()
     {
         return $this->shop;
+    }
+
+    /**
+     * Set shippingCountry
+     *
+     * @param string $shippingCountry
+     *
+     * @return ShopifyCheckout
+     */
+    public function setShippingCountry($shippingCountry)
+    {
+        $this->shippingCountry = $shippingCountry;
+
+        return $this;
+    }
+
+    /**
+     * Get shippingCountry
+     *
+     * @return string
+     */
+    public function getShippingCountry()
+    {
+        return $this->shippingCountry;
     }
 }

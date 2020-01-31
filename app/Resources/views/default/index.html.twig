@@ -21,7 +21,7 @@
                         <ul>
                             {% for shop in shops %}
                                 <li>
-                                    <a class="btn btn-success btn-sm" style="margin: 10px" href="{{ url('generate_csv_orders',{shop:shop.id}) }}">{{ shop.name }}</a>
+                                    <a class="btn btn-success btn-sm" style="margin: 10px" href="{{ url('generate_csv_orders',{shop:shop.id}) }}">{{ shop.name }} orders</a>
                                 </li>
                             {% endfor %}
                         </ul>
@@ -31,7 +31,7 @@
                         <ul>
                             {% for shop in shops %}
                                 <li>
-                                    <a class="btn btn-success btn-sm" style="margin: 10px" href="{{ url('generate_csv_checkouts',{shop:shop.id}) }}">{{ shop.name }}</a>
+                                    <a class="btn btn-success btn-sm" style="margin: 10px" href="{{ url('generate_csv_checkouts',{shop:shop.id}) }}">{{ shop.name }} checkouts</a>
                                 </li>
                             {% endfor %}
                         </ul>

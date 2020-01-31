@@ -33,14 +33,14 @@ class DefaultController extends Controller
         $em->flush();
     }
 
-    protected function getPhoneNumber($number){
+    protected function getPhoneNumber($number,$prefix){
         $number = preg_replace("/[^0-9]/", "",$number);
         $firstNumber = substr($number, 0, 1);
-        $number = preg_replace("/^0+/","359",$number);
-        $query = "359";
+        $number = preg_replace("/^0+/",$prefix,$number);
+        $query = $prefix;
 
         if(substr($number, 0, strlen($query)) != $query && $number!= "" && $number != null){
-            $number = "359".$number;
+            $number = $prefix.$number;
         }
 
         if(strlen($number) > 12){

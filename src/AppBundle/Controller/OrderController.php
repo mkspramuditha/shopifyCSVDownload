@@ -94,15 +94,18 @@ class OrderController extends DefaultController
                         $orderObj->setOrderCount($customer['orders_count']);
                         $orderObj->setLastOrderId((string)$customer['last_order_id']);
                         $orderObj->setEmail($customer['email']);
+                        if(key_exists('shipping_address',$order)){
+                            $orderObj->setShippingCountry($order['shipping_address']['country']);
+                        }
                         if($shop->getNumberCorrection()){
-                            $orderObj->setPhone($this->getPhoneNumber($customer['phone']));
+                            $orderObj->setPhone($this->getPhoneNumber($customer['phone'],"359"));
                         }else{
                             $orderObj->setPhone($customer['phone']);
                         }
                         $orderObj->setShop($shopId);
                         try{
                             if($shop->getNumberCorrection()) {
-                                $orderObj->setCustomerPhone($this->getPhoneNumber($order['billing_address']['phone']));
+                                $orderObj->setCustomerPhone($this->getPhoneNumber($order['billing_address']['phone'],"359"));
                             }else{
                                 $orderObj->setCustomerPhone($order['billing_address']['phone']);
                             }
@@ -112,7 +115,7 @@ class OrderController extends DefaultController
 
                         try{
                             if($shop->getNumberCorrection()) {
-                                $orderObj->setShippingPhone($this->getPhoneNumber($order['shipping_address']['phone']));
+                                $orderObj->setShippingPhone($this->getPhoneNumber($order['shipping_address']['phone'],"359"));
                             }else{
                                 $orderObj->setShippingPhone($order['shipping_address']['phone']);
                             }
@@ -219,6 +222,9 @@ class OrderController extends DefaultController
                         $orderObj->setOrderCount($customer['orders_count']);
                         $orderObj->setLastOrderId((string)$customer['last_order_id']);
                         $orderObj->setEmail($customer['email']);
+                        if(key_exists('shipping_address',$order)){
+                            $orderObj->setShippingCountry($order['shipping_address']['country']);
+                        }
                         if($shop->getNumberCorrection()){
                             $orderObj->setPhone($this->getPhoneNumber($customer['phone']));
                         }else{
@@ -293,7 +299,7 @@ class OrderController extends DefaultController
 
 
         $csvArray = array();
-        $headers = array('STATUS','ORDER NUMBER','LAST ORDER DATE','TTL ORDERS','ACCEPT MARKETING','AMOUNT','FIRST NAME','LAST NAME','EMAIL','PHONE','CUSTOMER PHONE','SHIPPING PHONE');
+        $headers = array('STATUS','ORDER NUMBER','LAST ORDER DATE','TTL ORDERS','ACCEPT MARKETING','AMOUNT','FIRST NAME','LAST NAME','EMAIL','PHONE','CUSTOMER PHONE','SHIPPING PHONE','SHIPPING COUNTRY');
         $csvArray[] = $headers;
 
 
@@ -323,15 +329,15 @@ class OrderController extends DefaultController
             $csvLine[] = $order->getEmail();
 
             if($shop->getNumberCorrection()) {
-                $phone = $this->getPhoneNumber($order->getPhone());
-                $customerPhone =  $this->getPhoneNumber($order->getCustomerPhone());
-                $shippingPhone = $this->getPhoneNumber($order->getShippingPhone());
+                $phone = $this->getPhoneNumber($order->getPhone(),"359");
+                $customerPhone =  $this->getPhoneNumber($order->getCustomerPhone(),"359");
+                $shippingPhone = $this->getPhoneNumber($order->getShippingPhone(),"359");
 
 
             }else{
-                $phone = $order->getPhone();
-                $customerPhone =  $order->getCustomerPhone();
-                $shippingPhone = $order->getShippingPhone();
+                $phone = $this->getPhoneNumber($order->getPhone(),"40");
+                $customerPhone =  $this->getPhoneNumber($order->getCustomerPhone(),"40");
+                $shippingPhone = $this->getPhoneNumber($order->getShippingPhone(),"40");
             }
 
             $csvLine[] = $phone;
@@ -346,6 +352,7 @@ class OrderController extends DefaultController
                 $csvLine[] = $shippingPhone;
             }
 
+            $csvLine[] = $order->getShippingCountry();
 
             $csvArray[] = $csvLine;
         }
