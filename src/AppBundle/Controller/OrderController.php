@@ -226,14 +226,14 @@ class OrderController extends DefaultController
                             $orderObj->setShippingCountry($order['shipping_address']['country']);
                         }
                         if($shop->getNumberCorrection()){
-                            $orderObj->setPhone($this->getPhoneNumber($customer['phone']),"359");
+                            $orderObj->setPhone($this->getPhoneNumber($customer['phone'],"359"));
                         }else{
                             $orderObj->setPhone($customer['phone']);
                         }
                         $orderObj->setShop($shopId);
                         try{
                             if($shop->getNumberCorrection()) {
-                                $orderObj->setCustomerPhone($this->getPhoneNumber($order['billing_address']['phone']),"359");
+                                $orderObj->setCustomerPhone($this->getPhoneNumber($order['billing_address']['phone'],"359"));
                             }else{
                                 $orderObj->setCustomerPhone($order['billing_address']['phone']);
                             }
@@ -243,7 +243,7 @@ class OrderController extends DefaultController
 
                         try{
                             if($shop->getNumberCorrection()) {
-                                $orderObj->setShippingPhone($this->getPhoneNumber($order['shipping_address']['phone']),"359");
+                                $orderObj->setShippingPhone($this->getPhoneNumber($order['shipping_address']['phone'],"359"));
                             }else{
                                 $orderObj->setShippingPhone($order['shipping_address']['phone']);
                             }
