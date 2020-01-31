@@ -298,9 +298,9 @@ class CheckoutController extends DefaultController
                 $shippingPhone = $this->getPhoneNumber($order->getShippingPhone(),"359");
 
             }else{
-                $phone = $this->getPhoneNumber($order->getPhone(),"40");
-                $customerPhone =  $this->getPhoneNumber($order->getCustomerPhone(),"40");
-                $shippingPhone = $this->getPhoneNumber($order->getShippingPhone(),"40");
+                $phone = $this->getPhoneNumber($order->getPhone(),$this->getPhonePrefix(strtolower($order->getShippingCountry())));
+                $customerPhone =  $this->getPhoneNumber($order->getCustomerPhone(),$this->getPhonePrefix(strtolower($order->getShippingCountry())));
+                $shippingPhone = $this->getPhoneNumber($order->getShippingPhone(),$this->getPhonePrefix(strtolower($order->getShippingCountry())));
             }
 
             $csvLine[] = $phone;
