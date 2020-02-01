@@ -1,0 +1,930 @@
+[
+ {
+   "FIELD1": "Afghanistan",
+   "FIELD2": 93
+ },
+ {
+   "FIELD1": "Albania",
+   "FIELD2": 355
+ },
+ {
+   "FIELD1": "Algeria",
+   "FIELD2": 21
+ },
+ {
+   "FIELD1": "American Samoa",
+   "FIELD2": 684
+ },
+ {
+   "FIELD1": "Andorra",
+   "FIELD2": 376
+ },
+ {
+   "FIELD1": "Angola",
+   "FIELD2": 244
+ },
+ {
+   "FIELD1": "Anguilla",
+   "FIELD2": 1264
+ },
+ {
+   "FIELD1": "Antigua and Barbuda",
+   "FIELD2": 1268
+ },
+ {
+   "FIELD1": "Armenia",
+   "FIELD2": 374
+ },
+ {
+   "FIELD1": "Argentina",
+   "FIELD2": 54
+ },
+ {
+   "FIELD1": "Australia",
+   "FIELD2": 61
+ },
+ {
+   "FIELD1": "Austria",
+   "FIELD2": 43
+ },
+ {
+   "FIELD1": "Azerbaijan",
+   "FIELD2": 994
+ },
+ {
+   "FIELD1": "Bahamas",
+   "FIELD2": 1242
+ },
+ {
+   "FIELD1": "Bahrain",
+   "FIELD2": 973
+ },
+ {
+   "FIELD1": "Bangladesh",
+   "FIELD2": 880
+ },
+ {
+   "FIELD1": "Barbados",
+   "FIELD2": 1246
+ },
+ {
+   "FIELD1": "Belarus",
+   "FIELD2": 375
+ },
+ {
+   "FIELD1": "Belgium",
+   "FIELD2": 32
+ },
+ {
+   "FIELD1": "Belize",
+   "FIELD2": 501
+ },
+ {
+   "FIELD1": "Benin",
+   "FIELD2": 229
+ },
+ {
+   "FIELD1": "Bermuda",
+   "FIELD2": 1441
+ },
+ {
+   "FIELD1": "Bolivia",
+   "FIELD2": 591
+ },
+ {
+   "FIELD1": "Bosnia and Herzegovina",
+   "FIELD2": 387
+ },
+ {
+   "FIELD1": "Botswana",
+   "FIELD2": 267
+ },
+ {
+   "FIELD1": "Brazil",
+   "FIELD2": 55
+ },
+ {
+   "FIELD1": "British Virgin Islands",
+   "FIELD2": 1284
+ },
+ {
+   "FIELD1": "Brunei Darusalaam",
+   "FIELD2": 673
+ },
+ {
+   "FIELD1": "Bulgaria",
+   "FIELD2": 359
+ },
+ {
+   "FIELD1": "Burkina Faso",
+   "FIELD2": 226
+ },
+ {
+   "FIELD1": "Burundi",
+   "FIELD2": 257
+ },
+ {
+   "FIELD1": "Byelorussian",
+   "FIELD2": 7
+ },
+ {
+   "FIELD1": "Cambodia",
+   "FIELD2": 855
+ },
+ {
+   "FIELD1": "Cameroon",
+   "FIELD2": 237
+ },
+ {
+   "FIELD1": "Canada",
+   "FIELD2": 1
+ },
+ {
+   "FIELD1": "Cape Verde",
+   "FIELD2": 238
+ },
+ {
+   "FIELD1": "Cayman Islands",
+   "FIELD2": 1345
+ },
+ {
+   "FIELD1": "Central African Republic",
+   "FIELD2": 236
+ },
+ {
+   "FIELD1": "Chad",
+   "FIELD2": 235
+ },
+ {
+   "FIELD1": "Chile",
+   "FIELD2": 56
+ },
+ {
+   "FIELD1": "China",
+   "FIELD2": 86
+ },
+ {
+   "FIELD1": "Christmas Island",
+   "FIELD2": 672
+ },
+ {
+   "FIELD1": "Cocos Islands",
+   "FIELD2": 672
+ },
+ {
+   "FIELD1": "Colombia",
+   "FIELD2": 57
+ },
+ {
+   "FIELD1": "Commonwealth of the Northern Mariana Islands",
+   "FIELD2": 1670
+ },
+ {
+   "FIELD1": "Comoros and Mayotte Island",
+   "FIELD2": 269
+ },
+ {
+   "FIELD1": "Congo",
+   "FIELD2": 242
+ },
+ {
+   "FIELD1": "Cook Islands",
+   "FIELD2": 682
+ },
+ {
+   "FIELD1": "Costa Rica",
+   "FIELD2": 506
+ },
+ {
+   "FIELD1": "Croatia",
+   "FIELD2": 385
+ },
+ {
+   "FIELD1": "Cuba",
+   "FIELD2": 53
+ },
+ {
+   "FIELD1": "Cyprus",
+   "FIELD2": 357
+ },
+ {
+   "FIELD1": "Czech Republic",
+   "FIELD2": 420
+ },
+ {
+   "FIELD1": "Denmark",
+   "FIELD2": 45
+ },
+ {
+   "FIELD1": "Diego Garcia",
+   "FIELD2": 246
+ },
+ {
+   "FIELD1": "Djibouti",
+   "FIELD2": 253
+ },
+ {
+   "FIELD1": "Dominica",
+   "FIELD2": 1767
+ },
+ {
+   "FIELD1": "Dominican Republic",
+   "FIELD2": 1809
+ },
+ {
+   "FIELD1": "East Timor",
+   "FIELD2": 62
+ },
+ {
+   "FIELD1": "Ecuador",
+   "FIELD2": 593
+ },
+ {
+   "FIELD1": "Egypt",
+   "FIELD2": 20
+ },
+ {
+   "FIELD1": "El Salvador",
+   "FIELD2": 503
+ },
+ {
+   "FIELD1": "Equatorial Guinea",
+   "FIELD2": 240
+ },
+ {
+   "FIELD1": "Estonia",
+   "FIELD2": 372
+ },
+ {
+   "FIELD1": "Ethiopia",
+   "FIELD2": 251
+ },
+ {
+   "FIELD1": "Faeroe Islands",
+   "FIELD2": 298
+ },
+ {
+   "FIELD1": "Falkland Islands",
+   "FIELD2": 500
+ },
+ {
+   "FIELD1": "Fiji",
+   "FIELD2": 679
+ },
+ {
+   "FIELD1": "Finland",
+   "FIELD2": 358
+ },
+ {
+   "FIELD1": "France",
+   "FIELD2": 33
+ },
+ {
+   "FIELD1": "French Antilles",
+   "FIELD2": 590
+ },
+ {
+   "FIELD1": "French Guiana",
+   "FIELD2": 594
+ },
+ {
+   "FIELD1": "French Polynesia",
+   "FIELD2": 689
+ },
+ {
+   "FIELD1": "Gabon",
+   "FIELD2": 241
+ },
+ {
+   "FIELD1": "Gambia",
+   "FIELD2": 220
+ },
+ {
+   "FIELD1": "Georgia",
+   "FIELD2": 995
+ },
+ {
+   "FIELD1": "Germany",
+   "FIELD2": 49
+ },
+ {
+   "FIELD1": "Ghana",
+   "FIELD2": 233
+ },
+ {
+   "FIELD1": "Gibraltar",
+   "FIELD2": 350
+ },
+ {
+   "FIELD1": "Greece",
+   "FIELD2": 30
+ },
+ {
+   "FIELD1": "Greenland",
+   "FIELD2": 299
+ },
+ {
+   "FIELD1": "Grenada",
+   "FIELD2": 1473
+ },
+ {
+   "FIELD1": "Guam",
+   "FIELD2": 1
+ },
+ {
+   "FIELD1": "Guatemala",
+   "FIELD2": 502
+ },
+ {
+   "FIELD1": "Guinea",
+   "FIELD2": 224
+ },
+ {
+   "FIELD1": "Guinea-Bissau",
+   "FIELD2": 245
+ },
+ {
+   "FIELD1": "Guyana",
+   "FIELD2": 592
+ },
+ {
+   "FIELD1": "Haiti",
+   "FIELD2": 509
+ },
+ {
+   "FIELD1": "Honduras",
+   "FIELD2": 504
+ },
+ {
+   "FIELD1": "Hong Kong",
+   "FIELD2": 852
+ },
+ {
+   "FIELD1": "Hungary",
+   "FIELD2": 36
+ },
+ {
+   "FIELD1": "Iceland",
+   "FIELD2": 354
+ },
+ {
+   "FIELD1": "India",
+   "FIELD2": 91
+ },
+ {
+   "FIELD1": "Indonesia",
+   "FIELD2": 62
+ },
+ {
+   "FIELD1": "Iran",
+   "FIELD2": 98
+ },
+ {
+   "FIELD1": "Iraq",
+   "FIELD2": 964
+ },
+ {
+   "FIELD1": "Ireland",
+   "FIELD2": 353
+ },
+ {
+   "FIELD1": "Israel",
+   "FIELD2": 972
+ },
+ {
+   "FIELD1": "Italy",
+   "FIELD2": 39
+ },
+ {
+   "FIELD1": "Ivory Coast",
+   "FIELD2": 225
+ },
+ {
+   "FIELD1": "Jamaica",
+   "FIELD2": 1876
+ },
+ {
+   "FIELD1": "Japan",
+   "FIELD2": 81
+ },
+ {
+   "FIELD1": "Jordan",
+   "FIELD2": 962
+ },
+ {
+   "FIELD1": "Kazakhstan",
+   "FIELD2": 7
+ },
+ {
+   "FIELD1": "Kenya",
+   "FIELD2": 254
+ },
+ {
+   "FIELD1": "Kiribati Republic",
+   "FIELD2": 686
+ },
+ {
+   "FIELD1": "Kirg(h)izia",
+   "FIELD2": 996
+ },
+ {
+   "FIELD1": "Kuwait",
+   "FIELD2": 965
+ },
+ {
+   "FIELD1": "Laos",
+   "FIELD2": 856
+ },
+ {
+   "FIELD1": "Latvia",
+   "FIELD2": 371
+ },
+ {
+   "FIELD1": "Lebanon",
+   "FIELD2": 961
+ },
+ {
+   "FIELD1": "Lesotho",
+   "FIELD2": 266
+ },
+ {
+   "FIELD1": "Liberia",
+   "FIELD2": 231
+ },
+ {
+   "FIELD1": "Libya",
+   "FIELD2": 21
+ },
+ {
+   "FIELD1": "Liechtenstein",
+   "FIELD2": 41
+ },
+ {
+   "FIELD1": "Lithuania",
+   "FIELD2": 370
+ },
+ {
+   "FIELD1": "Luxembourg",
+   "FIELD2": 352
+ },
+ {
+   "FIELD1": "Macao",
+   "FIELD2": 853
+ },
+ {
+   "FIELD1": "Macedonia",
+   "FIELD2": 389
+ },
+ {
+   "FIELD1": "Madagascar",
+   "FIELD2": 261
+ },
+ {
+   "FIELD1": "Malawi",
+   "FIELD2": 265
+ },
+ {
+   "FIELD1": "Malaysia",
+   "FIELD2": 60
+ },
+ {
+   "FIELD1": "Maldives",
+   "FIELD2": 960
+ },
+ {
+   "FIELD1": "Mali",
+   "FIELD2": 223
+ },
+ {
+   "FIELD1": "Malta",
+   "FIELD2": 356
+ },
+ {
+   "FIELD1": "Marshall Islands",
+   "FIELD2": 692
+ },
+ {
+   "FIELD1": "Martinique",
+   "FIELD2": 596
+ },
+ {
+   "FIELD1": "Mauritania",
+   "FIELD2": 222
+ },
+ {
+   "FIELD1": "Mauritius",
+   "FIELD2": 230
+ },
+ {
+   "FIELD1": "Mexico",
+   "FIELD2": 52
+ },
+ {
+   "FIELD1": "Micronesia",
+   "FIELD2": 691
+ },
+ {
+   "FIELD1": "Monaco",
+   "FIELD2": 377
+ },
+ {
+   "FIELD1": "Moldova, Republic of",
+   "FIELD2": 373
+ },
+ {
+   "FIELD1": "Mongolia",
+   "FIELD2": 976
+ },
+ {
+   "FIELD1": "Montserrat",
+   "FIELD2": 1664
+ },
+ {
+   "FIELD1": "Morocco",
+   "FIELD2": 212
+ },
+ {
+   "FIELD1": "Mozambique",
+   "FIELD2": 258
+ },
+ {
+   "FIELD1": "Myanmar",
+   "FIELD2": 95
+ },
+ {
+   "FIELD1": "Namibia",
+   "FIELD2": 264
+ },
+ {
+   "FIELD1": "Nauru",
+   "FIELD2": 674
+ },
+ {
+   "FIELD1": "Nepal",
+   "FIELD2": 977
+ },
+ {
+   "FIELD1": "Netherlands",
+   "FIELD2": 31
+ },
+ {
+   "FIELD1": "Netherlands Antilles",
+   "FIELD2": 599
+ },
+ {
+   "FIELD1": "New Caledonia",
+   "FIELD2": 687
+ },
+ {
+   "FIELD1": "New Zealand",
+   "FIELD2": 64
+ },
+ {
+   "FIELD1": "Nicaragua",
+   "FIELD2": 505
+ },
+ {
+   "FIELD1": "Niger",
+   "FIELD2": 227
+ },
+ {
+   "FIELD1": "Nigeria",
+   "FIELD2": 234
+ },
+ {
+   "FIELD1": "Niue",
+   "FIELD2": 683
+ },
+ {
+   "FIELD1": "Norfolk Island",
+   "FIELD2": 672
+ },
+ {
+   "FIELD1": "North Korea",
+   "FIELD2": 850
+ },
+ {
+   "FIELD1": "North Yemen",
+   "FIELD2": 967
+ },
+ {
+   "FIELD1": "North Macedonia",
+   "FIELD2": 389
+ },
+ {
+   "FIELD1": "Northern Mariana Islands",
+   "FIELD2": 670
+ },
+ {
+   "FIELD1": "Norway",
+   "FIELD2": 47
+ },
+ {
+   "FIELD1": "Oman",
+   "FIELD2": 968
+ },
+ {
+   "FIELD1": "Pakistan",
+   "FIELD2": 92
+ },
+ {
+   "FIELD1": "Panama",
+   "FIELD2": 507
+ },
+ {
+   "FIELD1": "Papua New Guinea",
+   "FIELD2": 675
+ },
+ {
+   "FIELD1": "Paraguay",
+   "FIELD2": 595
+ },
+ {
+   "FIELD1": "Peru",
+   "FIELD2": 51
+ },
+ {
+   "FIELD1": "Philippines",
+   "FIELD2": 63
+ },
+ {
+   "FIELD1": "Poland",
+   "FIELD2": 48
+ },
+ {
+   "FIELD1": "Portugal",
+   "FIELD2": 351
+ },
+ {
+   "FIELD1": "Puerto Rico",
+   "FIELD2": 1787
+ },
+ {
+   "FIELD1": "Qatar",
+   "FIELD2": 974
+ },
+ {
+   "FIELD1": "Republic of San Marino",
+   "FIELD2": 378
+ },
+ {
+   "FIELD1": "Reunion",
+   "FIELD2": 262
+ },
+ {
+   "FIELD1": "Romania",
+   "FIELD2": 40
+ },
+ {
+   "FIELD1": "Russia",
+   "FIELD2": 7
+ },
+ {
+   "FIELD1": "Rwandese Republic",
+   "FIELD2": 250
+ },
+ {
+   "FIELD1": "Saint Helena and Ascension Island",
+   "FIELD2": 247
+ },
+ {
+   "FIELD1": "Saint Pierre et Miquelon",
+   "FIELD2": 508
+ },
+ {
+   "FIELD1": "San Marino",
+   "FIELD2": 39
+ },
+ {
+   "FIELD1": "Sao Tome e Principe",
+   "FIELD2": 239
+ },
+ {
+   "FIELD1": "Saudi Arabia",
+   "FIELD2": 966
+ },
+ {
+   "FIELD1": "Senegal",
+   "FIELD2": 221
+ },
+ {
+   "FIELD1": "Serbia",
+   "FIELD2": 381
+ },
+ {
+   "FIELD1": "Seychelles",
+   "FIELD2": 248
+ },
+ {
+   "FIELD1": "Sierra Leone",
+   "FIELD2": 232
+ },
+ {
+   "FIELD1": "Singapore",
+   "FIELD2": 65
+ },
+ {
+   "FIELD1": "Slovakia",
+   "FIELD2": 421
+ },
+ {
+   "FIELD1": "Slovenia",
+   "FIELD2": 386
+ },
+ {
+   "FIELD1": "Solomon Islands",
+   "FIELD2": 677
+ },
+ {
+   "FIELD1": "Somalia",
+   "FIELD2": 252
+ },
+ {
+   "FIELD1": "South Africa",
+   "FIELD2": 27
+ },
+ {
+   "FIELD1": "South Korea",
+   "FIELD2": 82
+ },
+ {
+   "FIELD1": "South Yemen",
+   "FIELD2": 969
+ },
+ {
+   "FIELD1": "Spain",
+   "FIELD2": 34
+ },
+ {
+   "FIELD1": "Sri Lanka",
+   "FIELD2": 94
+ },
+ {
+   "FIELD1": "St.Kitts and Nevis",
+   "FIELD2": 1869
+ },
+ {
+   "FIELD1": "St.Lucia",
+   "FIELD2": 1758
+ },
+ {
+   "FIELD1": "St.Vincent and the Grenadines",
+   "FIELD2": 1784
+ },
+ {
+   "FIELD1": "Sudan",
+   "FIELD2": 249
+ },
+ {
+   "FIELD1": "Suriname",
+   "FIELD2": 597
+ },
+ {
+   "FIELD1": "Svalbard and Jan Mayen Islands",
+   "FIELD2": 47
+ },
+ {
+   "FIELD1": "Swaziland",
+   "FIELD2": 268
+ },
+ {
+   "FIELD1": "Sweden",
+   "FIELD2": 46
+ },
+ {
+   "FIELD1": "Switzerland",
+   "FIELD2": 41
+ },
+ {
+   "FIELD1": "Syria",
+   "FIELD2": 963
+ },
+ {
+   "FIELD1": "Ta(d)jikistan",
+   "FIELD2": 992
+ },
+ {
+   "FIELD1": "Taiwan",
+   "FIELD2": 886
+ },
+ {
+   "FIELD1": "Tanzania",
+   "FIELD2": 255
+ },
+ {
+   "FIELD1": "Thailand",
+   "FIELD2": 66
+ },
+ {
+   "FIELD1": "Togolese Republic",
+   "FIELD2": 228
+ },
+ {
+   "FIELD1": "Tokelau",
+   "FIELD2": 690
+ },
+ {
+   "FIELD1": "Tonga",
+   "FIELD2": 676
+ },
+ {
+   "FIELD1": "Trinidad and Tobago",
+   "FIELD2": 1868
+ },
+ {
+   "FIELD1": "Tunisia",
+   "FIELD2": 21
+ },
+ {
+   "FIELD1": "Turkey",
+   "FIELD2": 90
+ },
+ {
+   "FIELD1": "Turkmenistan",
+   "FIELD2": 993
+ },
+ {
+   "FIELD1": "Turks & Caicos Islands",
+   "FIELD2": 1649
+ },
+ {
+   "FIELD1": "Tuvalu",
+   "FIELD2": 688
+ },
+ {
+   "FIELD1": "US Virgin Islands",
+   "FIELD2": 1340
+ },
+ {
+   "FIELD1": "Uganda",
+   "FIELD2": 256
+ },
+ {
+   "FIELD1": "Ukraine",
+   "FIELD2": 380
+ },
+ {
+   "FIELD1": "United Arab Emirates",
+   "FIELD2": 971
+ },
+ {
+   "FIELD1": "United Kingdom",
+   "FIELD2": 44
+ },
+ {
+   "FIELD1": "Uruguay",
+   "FIELD2": 598
+ },
+ {
+   "FIELD1": "United States",
+   "FIELD2": 1
+ },
+ {
+   "FIELD1": "Uzbekistan",
+   "FIELD2": 998
+ },
+ {
+   "FIELD1": "Vanuatu",
+   "FIELD2": 678
+ },
+ {
+   "FIELD1": "Vatican City",
+   "FIELD2": 39
+ },
+ {
+   "FIELD1": "Venezuela",
+   "FIELD2": 58
+ },
+ {
+   "FIELD1": "Vietnam",
+   "FIELD2": 84
+ },
+ {
+   "FIELD1": "Wallis and Futuna Islands",
+   "FIELD2": 681
+ },
+ {
+   "FIELD1": "Western Sahara",
+   "FIELD2": 21
+ },
+ {
+   "FIELD1": "Western Samoa",
+   "FIELD2": 685
+ },
+ {
+   "FIELD1": "Yugoslavia",
+   "FIELD2": 381
+ },
+ {
+   "FIELD1": "Zaire",
+   "FIELD2": 243
+ },
+ {
+   "FIELD1": "Zambia",
+   "FIELD2": 260
+ },
+ {
+   "FIELD1": "Zimbabwe",
+   "FIELD2": 263
+ }
+]

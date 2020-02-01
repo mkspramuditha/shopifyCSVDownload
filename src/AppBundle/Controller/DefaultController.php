@@ -11,18 +11,19 @@ class DefaultController extends Controller
 {
     protected $apiUrl = "https://2354d58135ab061a6b441b5631a4b2b8:2feae715e670be2696d1f8f61a9a14c8@hillman.myshopify.com";
 
-    protected $countryMap = array(
-        'germany'=>'49',
-        'switzerland'=>'41',
-        'austria'=>'43',
-        'estonia'=>'372',
-        'czech republic'=>'420',
-        'belgium'=>'32',
-        'hungary'=>'36',
-        'portugal'=>'351',
-        'sweden'=>'46',
-        'bulgaria'=>'359'
-    );
+    protected $countryMap = null;
+//    protected $countryMap = array(
+//        'germany'=>'49',
+//        'switzerland'=>'41',
+//        'austria'=>'43',
+//        'estonia'=>'372',
+//        'czech republic'=>'420',
+//        'belgium'=>'32',
+//        'hungary'=>'36',
+//        'portugal'=>'351',
+//        'sweden'=>'46',
+//        'bulgaria'=>'359'
+//    );
 
     protected function getRepository($class)
     {
@@ -46,8 +47,16 @@ class DefaultController extends Controller
     }
 
     protected function getPhonePrefix($country){
-//        var_dump($this->countryMap[$country]);exit;
-        if(key_exists($country,$this->countryMap)){
+        if($this->countryMap == null){
+            $path =$this->getParameter('web_dir');
+            $content = file_get_contents($path."/countries.json");
+            $json = json_decode($content, true);
+            $this->countryMap = array();
+            foreach ($json as $countryObj){
+                $this->countryMap[strtolower($countryObj['FIELD1'])] = (string) $countryObj['FIELD2'];
+            }
+        }
+        if(key_exists($country, $this->countryMap)){
             return $this->countryMap[$country];
         }
 
@@ -56,8 +65,7 @@ class DefaultController extends Controller
 
     protected function getPhoneNumber($number,$prefix){
         $number = preg_replace("/[^0-9]/", "",$number);
-        $firstNumber = substr($number, 0, 1);
-        $number = preg_replace("/^0+/",$prefix,$number);
+        $number = preg_replace("/^0+/","",$number);
         $query = $prefix;
 
         if(substr($number, 0, strlen($query)) != $query && $number!= "" && $number != null){
@@ -68,6 +76,7 @@ class DefaultController extends Controller
         if(strlen($number) > 12 && $prefix == "359"){
             $number = substr($number,-12);
         }
+
         return $number;
     }
 
@@ -75,7 +84,7 @@ class DefaultController extends Controller
      * @Route("/test", name="test")
      */
     public function testAction(Request $request){
-        var_dump($this->getPhoneNumber("66488228085","43"));
+        var_dump($this->getPhoneNumber("00 43 676 6057958",$this->getPhonePrefix('austria')));
         exit;
     }
 
