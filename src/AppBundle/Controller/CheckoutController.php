@@ -276,7 +276,7 @@ class CheckoutController extends DefaultController
         }
         $this->updateCheckouts($request);
 
-        $orders = $this->getRepository('ShopifyCheckout')->findAll();
+        $orders = $this->getRepository('ShopifyCheckout')->findBy(array('shop'=>$shopId));
 
         $csvArray = array();
         $headers = array('STATUS','ORDER NUMBER','AMOUNT ABANDONED','DATE ABANDONED','ACCEPT MARKETING','FIRST NAME','LAST NAME','EMAIL','PHONE','CUSTOMER PHONE','SHIPPING PHONE','SHIPPING COUNTRY');
