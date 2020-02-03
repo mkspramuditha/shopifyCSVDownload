@@ -328,17 +328,11 @@ class OrderController extends DefaultController
             $csvLine[] = $order->getLastname();
             $csvLine[] = $order->getEmail();
 
-            if($shop->getNumberCorrection()) {
-                $phone = $this->getPhoneNumber($order->getPhone(),"359");
-                $customerPhone =  $this->getPhoneNumber($order->getCustomerPhone(),"359");
-                $shippingPhone = $this->getPhoneNumber($order->getShippingPhone(),"359");
 
+            $phone = $this->getPhoneNumber($order->getPhone(),$this->getPhonePrefix(strtolower($order->getShippingCountry())));
+            $customerPhone =  $this->getPhoneNumber($order->getCustomerPhone(),$this->getPhonePrefix(strtolower($order->getShippingCountry())));
+            $shippingPhone = $this->getPhoneNumber($order->getShippingPhone(),$this->getPhonePrefix(strtolower($order->getShippingCountry())));
 
-            }else{
-                $phone = $this->getPhoneNumber($order->getPhone(),$this->getPhonePrefix(strtolower($order->getShippingCountry())));
-                $customerPhone =  $this->getPhoneNumber($order->getCustomerPhone(),$this->getPhonePrefix(strtolower($order->getShippingCountry())));
-                $shippingPhone = $this->getPhoneNumber($order->getShippingPhone(),$this->getPhonePrefix(strtolower($order->getShippingCountry())));
-            }
 
             $csvLine[] = $phone;
             $csvLine[] =$customerPhone;
