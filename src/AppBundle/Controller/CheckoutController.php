@@ -316,7 +316,7 @@ class CheckoutController extends DefaultController
         }
 
         header('Content-Type: text/csv');
-        header('Content-Disposition: attachment; filename="'.$shop->getName().'checkouts.csv"');
+        header('Content-Disposition: attachment; filename="'.$shop->getName().' - checkouts.csv"');
         $fp = fopen('php://output', 'wb');
         foreach ($csvArray as $line){
             fputcsv($fp, $line);
