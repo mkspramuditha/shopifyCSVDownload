@@ -97,10 +97,16 @@ class OrderController extends DefaultController
                         if(key_exists('shipping_address',$order)){
                             $orderObj->setShippingCountry($order['shipping_address']['country']);
                         }
+
+                        $mainPhoneNumber = $order['phone'];
+
+                        if($customer['phone'] != null){
+                            $mainPhoneNumber = $customer['phone'];
+                        }
                         if($shop->getNumberCorrection()){
-                            $orderObj->setPhone($this->getPhoneNumber($customer['phone'],"359"));
+                            $orderObj->setPhone($this->getPhoneNumber($mainPhoneNumber,"359"));
                         }else{
-                            $orderObj->setPhone($customer['phone']);
+                            $orderObj->setPhone($mainPhoneNumber);
                         }
                         $orderObj->setShop($shopId);
                         try{
@@ -225,10 +231,17 @@ class OrderController extends DefaultController
                         if(key_exists('shipping_address',$order)){
                             $orderObj->setShippingCountry($order['shipping_address']['country']);
                         }
+
+                        $mainPhoneNumber = $order['phone'];
+
+                        if($customer['phone'] != null){
+                            $mainPhoneNumber = $customer['phone'];
+                        }
+
                         if($shop->getNumberCorrection()){
-                            $orderObj->setPhone($this->getPhoneNumber($customer['phone'],"359"));
+                            $orderObj->setPhone($this->getPhoneNumber($mainPhoneNumber,"359"));
                         }else{
-                            $orderObj->setPhone($customer['phone']);
+                            $orderObj->setPhone($mainPhoneNumber);
                         }
                         $orderObj->setShop($shopId);
                         try{
@@ -352,7 +365,7 @@ class OrderController extends DefaultController
         }
 
         header('Content-Type: text/csv');
-        header('Content-Disposition: attachment; filename='.$shop->getName().' - orders.csv');
+        header('Content-Disposition: attachment; filename="'.$shop->getName().' - orders.csv"');
         $fp = fopen('php://output', 'wb');
         foreach ($csvArray as $line){
             fputcsv($fp, $line);
