@@ -45,7 +45,7 @@ class GoogleSheetController extends DefaultController
             $rma = "";
             $tags = explode(",",$order->getTags());
             foreach ($tags as $tag){
-                if(strpos($tag, 'RMA')){
+                if(strpos($tag, 'RMA') !== false){
                     $rma = $tag;
                 }
             }
