@@ -48,6 +48,34 @@ class ShopifyOrder
     private $orderId;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="order_name", type="string")
+     */
+    private $orderName;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="order_url", type="string",length=500)
+     */
+    private $orderUrl;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="tags", type="string",length=500, nullable=true)
+     */
+    private $tags;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="waybill_id", type="string",length=500, nullable=true)
+     */
+    private $waybillId;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="created_at", type="string", length=255)
@@ -629,5 +657,101 @@ class ShopifyOrder
     public function getShippingCountry()
     {
         return $this->shippingCountry;
+    }
+
+    /**
+     * Set orderName
+     *
+     * @param string $orderName
+     *
+     * @return ShopifyOrder
+     */
+    public function setOrderName($orderName)
+    {
+        $this->orderName = $orderName;
+
+        return $this;
+    }
+
+    /**
+     * Get orderName
+     *
+     * @return string
+     */
+    public function getOrderName()
+    {
+        return $this->orderName;
+    }
+
+    /**
+     * Set orderUrl
+     *
+     * @param string $orderUrl
+     *
+     * @return ShopifyOrder
+     */
+    public function setOrderUrl($orderUrl)
+    {
+        $this->orderUrl = $orderUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get orderUrl
+     *
+     * @return string
+     */
+    public function getOrderUrl()
+    {
+        return $this->orderUrl;
+    }
+
+    /**
+     * Set tags
+     *
+     * @param string $tags
+     *
+     * @return ShopifyOrder
+     */
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
+
+        return $this;
+    }
+
+    /**
+     * Get tags
+     *
+     * @return string
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * Set waybillId
+     *
+     * @param string $waybillId
+     *
+     * @return ShopifyOrder
+     */
+    public function setWaybillId($waybillId)
+    {
+        $this->waybillId = $waybillId;
+
+        return $this;
+    }
+
+    /**
+     * Get waybillId
+     *
+     * @return string
+     */
+    public function getWaybillId()
+    {
+        return $this->waybillId;
     }
 }

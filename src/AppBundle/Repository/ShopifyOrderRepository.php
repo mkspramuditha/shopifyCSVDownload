@@ -19,4 +19,14 @@ class ShopifyOrderRepository extends \Doctrine\ORM\EntityRepository
         return $query->getQuery()->getSingleResult();
 
     }
+
+    public function getCSVExportOrders(){
+        $query = $this->createQueryBuilder('o');
+        $query->select('o')
+            ->where('o.tags LIKE  :tag')
+            ->setParameter('tag',"%RMA%")
+        ;
+        return $query->getQuery()->getResult();
+
+    }
 }

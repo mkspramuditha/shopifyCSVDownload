@@ -34,7 +34,7 @@ class OrderController extends DefaultController
 //        $em->flush();
 //        var_dump($shop->getUrl());exit;
 
-        for($i=1;$i<100;$i++){
+        for($i=63;$i<100;$i++){
             $ch = curl_init();
 //            var_dump($shop->getUrl().'/admin/orders.json?created_at_min=2019-05-24T00:00:00+02:00&limit=250&status=any&page='.$i);exit;
 //            curl_setopt($ch, CURLOPT_URL, "https://3623623bf53c36da004aa47174a0511b:cd7b56023e4c8109ca530baad06f1c36@hillmande.myshopify.com/admin/orders/count.json?created_at_min=2019-05-24T00:00:00+02:00&limit=250&status=any");
@@ -75,8 +75,11 @@ class OrderController extends DefaultController
                 break;
             }else{
                 foreach ($orders as $order){
-
-                    $customer = $order['customer'];
+                    if(array_key_exists('customer',$order)){
+                        $customer = $order['customer'];
+                    }else{
+                        continue;
+                    }
 
                     if(!$shop->getCountrySelect() || $customer['default_address']['country'] == "Bulgaria"){
                         $orderObj = new ShopifyOrder();
@@ -94,6 +97,14 @@ class OrderController extends DefaultController
                         $orderObj->setOrderCount($customer['orders_count']);
                         $orderObj->setLastOrderId((string)$customer['last_order_id']);
                         $orderObj->setEmail($customer['email']);
+                        $orderObj->setOrderUrl($order['order_status_url']);
+                        $orderObj->setOrderName($order['name']);
+                        $orderObj->setTags($order['tags']);
+                        if(is_array($order['fulfillments']) && count($order['fulfillments']) > 0){
+                            $orderObj->setWaybillId($order['fulfillments'][0]['tracking_number']);
+                        }else{
+                            $orderObj->setWaybillId("");
+                        }
                         if(key_exists('shipping_address',$order)){
                             $orderObj->setShippingCountry($order['shipping_address']['country']);
                         }
@@ -228,6 +239,14 @@ class OrderController extends DefaultController
                         $orderObj->setOrderCount($customer['orders_count']);
                         $orderObj->setLastOrderId((string)$customer['last_order_id']);
                         $orderObj->setEmail($customer['email']);
+                        $orderObj->setOrderUrl($order['order_status_url']);
+                        $orderObj->setOrderName($order['name']);
+                        $orderObj->setTags($order['tags']);
+                        if(is_array($order['fulfillments']) && count($order['fulfillments']) > 0){
+                            $orderObj->setWaybillId($order['fulfillments'][0]['tracking_number']);
+                        }else{
+                            $orderObj->setWaybillId("");
+                        }
                         if(key_exists('shipping_address',$order)){
                             $orderObj->setShippingCountry($order['shipping_address']['country']);
                         }

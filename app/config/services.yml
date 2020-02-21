@@ -4,6 +4,8 @@ parameters:
     #parameter_name: value
 
 services:
+    orders:
+        class: AppBundle\Controller\OrderController
     # default configuration for services in *this* file
     _defaults:
         # automatically injects dependencies in your services

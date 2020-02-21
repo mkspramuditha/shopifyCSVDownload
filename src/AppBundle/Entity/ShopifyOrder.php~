@@ -48,6 +48,34 @@ class ShopifyOrder
     private $orderId;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="order_name", type="string")
+     */
+    private $orderName;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="order_url", type="string",length=500)
+     */
+    private $orderUrl;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="tags", type="string",length=500)
+     */
+    private $tags;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="waybill_id", type="string",length=500)
+     */
+    private $waybillId;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="created_at", type="string", length=255)
