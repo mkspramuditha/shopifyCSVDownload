@@ -94,7 +94,7 @@ class GoogleSheetController extends DefaultController
             $params
         );
         var_dump($result);
-        exit;
+        return $this->redirectToRoute('dashboard');
     }
 
 
