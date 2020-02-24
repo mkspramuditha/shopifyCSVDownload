@@ -18,14 +18,25 @@ class GoogleSheetController extends DefaultController
     public function testCsvAction(Request $request){
 
         $shops = $this->getRepository('Shop')->findAll();
-        foreach ($shops as $shop){
-            $this->updateOrders($shop->getId());
-        }
+//        foreach ($shops as $shop){
+//            $this->updateOrders($shop->getId());
+//        }
 
         $client = $this->getClient();
         $service = new Google_Service_Sheets($client);
 
         $spreadsheetId = '1zaSvLXAUqHVmcdTeRxmUb66Eq9ejIAkapri5XF7QYeg';
+
+        $range = 'OrdersList!A2:R';
+        $response = $service->spreadsheets_values->get($spreadsheetId, $range);
+        $existingValues = $response->getValues();
+        var_dump(count($existingValues));
+        $existingValueMap = array();
+
+        foreach ($existingValues as $row){
+            $existingValueMap[$row[0]] = $row;
+        }
+
         $range = 'OrdersList!A1';
 
         $values = [
@@ -40,6 +51,7 @@ class GoogleSheetController extends DefaultController
 
         $orders = $this->getRepository('ShopifyOrder')->getCSVExportOrders();
 //        var_dump(count($orders));exit;
+        $i = 1;
         foreach ($orders as $order){
 
             $rma = "";
@@ -58,7 +70,7 @@ class GoogleSheetController extends DefaultController
                 $phoneNumber = $this->getPhoneNumber($order->getShippingPhone(),$this->getPhonePrefix(strtolower($order->getShippingCountry())));
             }
 //            var_dump($order->getPhone());exit;
-            $values[] = [
+            $values[$i] = [
                 $order->getOrderName(),
                 $shopMap[$order->getShop()],
                 $order->getOrderUrl(),
@@ -68,12 +80,23 @@ class GoogleSheetController extends DefaultController
                 $order->getFirstname(),
                 $order->getLastname(),
                 $phoneNumber
-
             ];
+
+            if(key_exists($order->getOrderName(),$existingValueMap)){
+                $insertedData = array_slice($existingValueMap[$order->getOrderName()],9);
+                $values[$i] = array_merge($values[$i],$insertedData);
+            }else{
+                $values[$i] = array_merge($values[$i],["","","","","","","","",""]);
+            }
+
+            $i+=1;
         }
 
 
-//        var_dump($values);exit;
+//        var_dump($values[2]);
+//        var_dump($values[3]);
+//
+//        ;exit;
 
         $updateBody = new Google_Service_Sheets_ValueRange([
             'range' => $range,
