@@ -18,9 +18,9 @@ class GoogleSheetController extends DefaultController
     public function testCsvAction(Request $request){
 
         $shops = $this->getRepository('Shop')->findAll();
-//        foreach ($shops as $shop){
-//            $this->updateOrders($shop->getId());
-//        }
+        foreach ($shops as $shop){
+            $this->updateOrders($shop->getId(), $request);
+        }
 
         $client = $this->getClient();
         $service = new Google_Service_Sheets($client);
@@ -30,12 +30,13 @@ class GoogleSheetController extends DefaultController
         $range = 'OrdersList!A2:R';
         $response = $service->spreadsheets_values->get($spreadsheetId, $range);
         $existingValues = $response->getValues();
-        var_dump(count($existingValues));
         $existingValueMap = array();
-
-        foreach ($existingValues as $row){
-            $existingValueMap[$row[0]] = $row;
+        if($existingValues != null){
+            foreach ($existingValues as $row){
+                $existingValueMap[$row[0]] = $row;
+            }
         }
+
 
         $range = 'OrdersList!A1';
 
@@ -183,22 +184,37 @@ class GoogleSheetController extends DefaultController
         return $client;
     }
 
+    /**
+     * @Route("/update/orders/force/{shop}", name="update_orders_force")
+     */
+    public function updateOrders($shop,Request $request){
 
-    private function updateOrders($shop){
-        $shopId = $shop;
+        if($request->get('shop') != null){
+            $shopId = $request->get('shop');
+        }else{
+            $shopId = $shop;
+        }
         if($shopId == null){
             var_dump("shop id not given");
             exit;
         }
-        var_dump($shopId);
         $shop = $this->getRepository('Shop')->find($shopId);
         if($shop == null){
             var_dump("shop not exists");
             exit;
         }
 
-        $dates = $this->getRepository('ShopifyOrder')->getLatestUpdateDate($shop->getId());
-        $latestUpdatedDate = $dates['latest_updated_date'];
+        if($request->get('date') != null){
+            $latestUpdatedDate = $request->get('date');
+        }else{
+            $dates = $this->getRepository('ShopifyOrder')->getLatestUpdateDate($shop->getId());
+            $latestUpdatedDate = $dates['latest_updated_date'];
+        }
+
+        var_dump($shopId);
+        var_dump($latestUpdatedDate);
+//        exit;
+
         $em = $this->getDoctrine()->getManager();
         $orderRepository = $this->getRepository('ShopifyOrder');
         for($i=1;$i<1000;$i++){
@@ -234,7 +250,6 @@ class GoogleSheetController extends DefaultController
                 var_dump($result);
                 exit;
             }
-//            var_dump(count($orders));
 //            var_dump(count($orders));exit;
             if(count($orders) == 0){
 //                var_dump($i);
