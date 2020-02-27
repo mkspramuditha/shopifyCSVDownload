@@ -33,7 +33,7 @@ class GoogleSheetController extends DefaultController
         $existingValueMap = array();
         if($existingValues != null){
             foreach ($existingValues as $row){
-                $existingValueMap[$row[0]] = $row;
+                $existingValueMap[trim($row[0])] = $row;
             }
         }
 
@@ -83,8 +83,10 @@ class GoogleSheetController extends DefaultController
                 $phoneNumber
             ];
 
-            if(key_exists($order->getOrderName(),$existingValueMap)){
-                $insertedData = array_slice($existingValueMap[$order->getOrderName()],9);
+            $orderName = trim($order->getOrderName());
+
+            if(key_exists($orderName,$existingValueMap)){
+                $insertedData = array_slice($existingValueMap[$orderName],9);
                 $values[$i] = array_merge($values[$i],$insertedData);
             }else{
                 $values[$i] = array_merge($values[$i],["","","","","","","","",""]);
@@ -94,7 +96,7 @@ class GoogleSheetController extends DefaultController
         }
 
 
-//        var_dump($values[2]);
+//        var_dump($values)
 //        var_dump($values[3]);
 //
 //        ;exit;
@@ -110,6 +112,10 @@ class GoogleSheetController extends DefaultController
         $params = [
             'valueInputOption' => $valueInputOption
         ];
+
+        $clearBody = new \Google_Service_Sheets_ClearValuesRequest();
+
+        $response = $service->spreadsheets_values->clear($spreadsheetId,'OrdersList', $clearBody);
 
         $result = $service->spreadsheets_values->update(
             $spreadsheetId,
