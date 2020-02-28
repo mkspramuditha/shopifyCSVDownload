@@ -41,7 +41,27 @@ class GoogleSheetController extends DefaultController
         $range = 'OrdersList!A1';
 
         $values = [
-            ["Order Number", "Shop name", "Link to ordessdsdr", "Shipping Country","RMA#","Waybill#","First Name","Last Name","Customer Phone"]
+            [
+                "Order Number",
+                "Shop name",
+                "Link to ordessdsdr",
+                "Shipping Country",
+                "RMA#",
+                "Waybill#",
+                "First Name",
+                "Last Name",
+                "Customer Phone",
+                "Operator Name", "STATUS Operator",
+                "Възможни действия
+                        1. Замяна ( Отг. Склад)
+                        2. Ремонт ( Отг. Силвия)
+                        3. Връщане сума ( Отг. Мирослава)",
+                "статус",
+                "заприхождаване в склада (номер на доставка)",
+                "изписване за замяна (номер поръчка)",
+                "Номер товарителница за връшане към клиента",
+                "(възст на сума) дата на платежно"
+            ]
         ];
 
         $shops = $this->getRepository('Shop')->findAll();
