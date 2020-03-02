@@ -7,10 +7,37 @@ use Google_Client;
 use Google_Service_Sheets;
 use Google_Service_Sheets_ValueRange;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class GoogleSheetController extends DefaultController
 {
+
+    /**
+     * @Route("/tag/fire", name="tag_fire")
+     */
+    public function tagFire(Request $request){
+        $data = json_decode($request->getContent(), true);
+        if($data != null){
+            if(array_key_exists('tags',$data)){
+                $tags = explode(",",$data['tags']);
+                foreach ($tags as $tag){
+                    if(strpos($tag, 'RMA') !== false){
+                        $this->testCsvAction($request);
+                        return new Response("google sheet updated");
+                    }
+                }
+                return new Response("tags found, but not matched");
+
+            }else{
+                return new Response("no tags field found");
+            }
+
+        }else{
+            return new Response("not webhook");
+        }
+    }
+
 
     /**
      * @Route("/csv/export", name="csv_export")
