@@ -34,7 +34,7 @@ class OrderController extends DefaultController
 //        $em->flush();
 //        var_dump($shop->getUrl());exit;
 
-        for($i=63;$i<100;$i++){
+        for($i=0;$i<100;$i++){
             $ch = curl_init();
 //            var_dump($shop->getUrl().'/admin/orders.json?created_at_min=2019-05-24T00:00:00+02:00&limit=250&status=any&page='.$i);exit;
 //            curl_setopt($ch, CURLOPT_URL, "https://3623623bf53c36da004aa47174a0511b:cd7b56023e4c8109ca530baad06f1c36@hillmande.myshopify.com/admin/orders/count.json?created_at_min=2019-05-24T00:00:00+02:00&limit=250&status=any");
