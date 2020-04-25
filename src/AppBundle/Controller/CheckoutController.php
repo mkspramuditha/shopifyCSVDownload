@@ -38,7 +38,8 @@ class CheckoutController extends DefaultController
 
         for($i=1;$i<1000;$i++){
             $ch = curl_init();
-
+//                curl_setopt($ch, CURLOPT_URL, $shop->getUrl().'/    admin/checkouts/count.json?status=any');
+//            var_dump($shop->getUrl().'/admin/checkouts/count.json?status=any');
             if($shop->getCountrySelect()){
                 curl_setopt($ch, CURLOPT_URL, $shop->getUrl().'/admin/checkouts.json?created_at_min=2019-05-24T00:00:00+02:00&limit=250&status=any&page='.$i);
             }else{
@@ -63,7 +64,7 @@ class CheckoutController extends DefaultController
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
             $result = curl_exec($ch);
-
+//            var_dump(json_decode($result,true));exit;
             if (curl_errno($ch)) {
                 echo 'Error:' . curl_error($ch);
             }
