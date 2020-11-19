@@ -141,11 +141,6 @@ class GoogleSheetController extends DefaultController
         }
 
 
-//        var_dump($values)
-//        var_dump($values[3]);
-//
-//        ;exit;
-
         $updateBody = new Google_Service_Sheets_ValueRange([
             'range' => $range,
             'majorDimension' => 'ROWS',
@@ -171,6 +166,147 @@ class GoogleSheetController extends DefaultController
         var_dump($result);
         return $this->redirectToRoute('dashboard');
     }
+
+    /**
+     * @Route("/googleSheet/export", name="all_orders_export")
+     */
+    public function googleSheetExportAction(Request $request){
+
+        $shops = $this->getRepository('Shop')->findAll();
+        foreach ($shops as $shop){
+            $this->updateOrders($shop->getId(), $request);
+        }
+
+        $client = $this->getClient();
+        $service = new Google_Service_Sheets($client);
+
+//        $spreadsheetId = '1zaSvLXAUqHVmcdTeRxmUb66Eq9ejIAkapri5XF7QYeg';
+        $spreadsheetId = '1Rmum93YCVGpMmLZHMUDdRlhMfQ8wl3wgmLGJUKseYO4';
+
+
+        $range = 'Sheet1!A1:Z';
+
+        $values = [
+            [
+                "Shop name",
+                "ORDER NUMBER",
+                "Order date",
+                "STAUS",
+                "Payment",
+                "Order link",
+                "Order value",
+                "ORDER TAGS",
+                "Staff who made the order",
+                "tracking number",
+                "Order notes by customer",
+                "Order notes by staff",
+                "Customer email",
+                "Shipping with",
+                "Numbers of order of customer",
+                "Customer's TTL spent",
+                "Phone w country code",
+                "BUYER",
+                "CONTACT PERSON",
+                "PHONE",
+                "CITY/REGION",
+                "POST CODE",
+                "ADDRESS",
+                "COUNTRY",
+                "DESCRIPTION",
+                "QUANTITIES"
+            ]
+        ];
+
+        $shops = $this->getRepository('Shop')->findAll();
+        $shopMap = array();
+        foreach ($shops as $shop){
+            $shopMap[$shop->getId()] = $shop->getName();
+        }
+
+//        $orders = $this->getRepository('ShopifyOrder')->findBy(array(),array(),2000);
+        $orders = $this->getRepository('ShopifyOrder')->findAll();
+//        var_dump(count($orders));exit;
+        $i = 0;
+        foreach ($orders as $order){
+
+
+            if($order->getPhone() != null){
+                $phoneNumber = $this->getPhoneNumber($order->getPhone(),$this->getPhonePrefix(strtolower($order->getShippingCountry())));
+            }else if($order->getCustomerPhone()){
+                $phoneNumber = $this->getPhoneNumber($order->getCustomerPhone(),$this->getPhonePrefix(strtolower($order->getShippingCountry())));
+
+            }else{
+                $phoneNumber = $this->getPhoneNumber($order->getShippingPhone(),$this->getPhonePrefix(strtolower($order->getShippingCountry())));
+            }
+//            var_dump($order->getPhone());exit;
+            $values[] = [
+                $shopMap[$order->getShop()],
+                $order->getOrderName(),
+                $order->getCreatedAt(),
+                $order->getFulfillmentStatus() == null ? "" : $order->getFulfillmentStatus(),
+                $order->getFinancialStatus() == null ? "" : $order->getFinancialStatus(),
+                $order->getOrderUrl(),
+                $order->getAmount(),
+                $order->getTags(),
+                "",
+                $order->getWaybillId() == null ? "" : $order->getWaybillId(),
+                $order->getCustomerNote() == null ? "" : $order->getCustomerNote(),
+                $order->getStaffNote() == null ? "" : $order->getStaffNote(),
+                $order->getEmail() == null ? "" : $order->getEmail(),
+                "",
+                $order->getOrderCount(),
+                $order->getTotalSpend(),
+                $phoneNumber,
+                $order->getFirstname(). " ".$order->getFirstname(),
+                $order->getFirstname(). " ".$order->getLastname(),
+                $order->getCustomerPhone() == null ? "" : $order->getCustomerPhone(),
+                $order->getCity() == null ? "" : $order->getCity(),
+                $order->getZip() == null ? "" : $order->getZip(),
+                $order->getOrderAddress() == null ? "" : $order->getOrderAddress(),
+                $order->getCountryCode() == null ? "" : $order->getCountryCode(),
+                $order->getDescription() == null ? "" : $order->getDescription(),
+                $order->getProductCount() == null ? "" : $order->getProductCount(),
+            ];
+
+//            $orderName = trim($order->getOrderName());
+//
+//            if(key_exists($orderName,$existingValueMap)){
+//                $insertedData = array_slice($existingValueMap[$orderName],9);
+//                $values[$i] = array_merge($values[$i],$insertedData);
+//            }else{
+//                $values[$i] = array_merge($values[$i],["","","","","","","","",""]);
+//            }
+
+            $i+=1;
+        }
+
+
+        $updateBody = new Google_Service_Sheets_ValueRange([
+            'range' => $range,
+            'majorDimension' => 'ROWS',
+            'values' => $values,
+        ]);
+
+        $valueInputOption = 'USER_ENTERED'; // Or RAW
+
+        $params = [
+            'valueInputOption' => $valueInputOption
+        ];
+
+        $clearBody = new \Google_Service_Sheets_ClearValuesRequest();
+
+        $response = $service->spreadsheets_values->clear($spreadsheetId,'Sheet1', $clearBody);
+
+        $result = $service->spreadsheets_values->update(
+            $spreadsheetId,
+            $range,
+            $updateBody,
+            $params
+        );
+        var_dump($result);
+        return $this->redirectToRoute('dashboard');
+    }
+
 
 
     protected function getClient()
@@ -327,14 +463,18 @@ class GoogleSheetController extends DefaultController
                         $orderObj->setNumber($order['order_number']);
                         $orderObj->setCancelledAt($order['cancelled_at']);
                         $orderObj->setFulfillmentStatus($order['fulfillment_status']);
+                        $orderObj->setFinancialStatus($order['financial_status']);
                         $orderObj->setAcceptMarketing($customer['accepts_marketing']);
                         $orderObj->setAmount($order['total_price']);
                         $orderObj->setCustomerId((string)$customer['id']);
                         $orderObj->setFirstname($customer['first_name']);
                         $orderObj->setLastname($customer['last_name']);
                         $orderObj->setOrderCount($customer['orders_count']);
+                        $orderObj->setTotalSpend($customer['total_spent']);
                         $orderObj->setLastOrderId((string)$customer['last_order_id']);
                         $orderObj->setEmail($customer['email']);
+                        $orderObj->setCustomerNote($customer['note']);
+                        $orderObj->setStaffNote($order['note']);
                         $orderObj->setOrderUrl($order['order_status_url']);
                         $orderObj->setOrderName($order['name']);
                         $orderObj->setTags($order['tags']);
@@ -345,7 +485,34 @@ class GoogleSheetController extends DefaultController
                         }
                         if(key_exists('shipping_address',$order)){
                             $orderObj->setShippingCountry($order['shipping_address']['country']);
+                            $orderObj->setCity($order['shipping_address']['city']);
+                            $orderObj->setZip($order['shipping_address']['zip']);
+
+                            $address = $order['shipping_address']['address1'];
+
+                            if($order['shipping_address']['address2'] != ''){
+                                $address.= ', '.$order['shipping_address']['address2'];
+                            }
+                            $orderObj->setOrderAddress($address);
+                            $orderObj->setCountryCode($order['shipping_address']['country_code']);
                         }
+
+                        $description = "";
+                        $totalProducts = 0;
+
+                        if(key_exists('line_items',$order)){
+
+                            foreach ($order['line_items'] as $line_item) {
+                                $description.= $line_item['title']. " - ".$line_item['quantity']."\n";
+                                $totalProducts += $line_item['quantity'];
+
+                            }
+                        }
+
+                        $orderObj->setDescription($description);
+                        $orderObj->setProductCount($totalProducts);
+
+
 
                         $mainPhoneNumber = $order['phone'];
 

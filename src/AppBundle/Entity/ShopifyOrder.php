@@ -103,6 +103,14 @@ class ShopifyOrder
      */
     private $fulfillmentStatus;
 
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="financial_status", type="string", length=255, nullable=true)
+     */
+    private $financialStatus;
+
     /**
      * @var string
      *
@@ -141,6 +149,13 @@ class ShopifyOrder
     /**
      * @var int
      *
+     * @ORM\Column(name="total_spend", type="float")
+     */
+    private $totalSpend;
+
+    /**
+     * @var int
+     *
      * @ORM\Column(name="last_order_id", type="string")
      */
     private $lastOrderId;
@@ -148,16 +163,60 @@ class ShopifyOrder
     /**
      * @var string
      *
-     * @ORM\Column(name="firstname", type="string", length=255)
+     * @ORM\Column(name="firstname", type="string", length=255, nullable=true)
      */
     private $firstname;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="lastname", type="string", length=255)
+     * @ORM\Column(name="lastname", type="string", length=255, nullable=true)
      */
     private $lastname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="city", type="string", length=255, nullable=true)
+     */
+    private $city;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="zip", type="string", length=255, nullable=true)
+     */
+    private $zip;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="order_address", type="text", length=255, nullable=true)
+     */
+    private $orderAddress;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="country_code", type="string", length=255, nullable=true)
+     */
+    private $countryCode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text", length=255, nullable=true)
+     */
+    private $description;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="product_count", type="integer", nullable=true)
+     */
+    private $productCount;
+
+
 
     /**
      * @var string
@@ -165,6 +224,20 @@ class ShopifyOrder
      * @ORM\Column(name="email", type="string", length=255, nullable=true)
      */
     private $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="customer_note", type="string", length=255, nullable=true)
+     */
+    private $customerNote;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="staff_note", type="string", length=255, nullable=true)
+     */
+    private $staffNote;
 
     /**
      * @var string
@@ -186,8 +259,6 @@ class ShopifyOrder
      * @ORM\Column(name="shippingPhone", type="string", length=255, nullable=true)
      */
     private $shippingPhone;
-
-
 
 
     /**
@@ -753,5 +824,245 @@ class ShopifyOrder
     public function getWaybillId()
     {
         return $this->waybillId;
+    }
+
+    /**
+     * Set financialStatus
+     *
+     * @param string $financialStatus
+     *
+     * @return ShopifyOrder
+     */
+    public function setFinancialStatus($financialStatus)
+    {
+        $this->financialStatus = $financialStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get financialStatus
+     *
+     * @return string
+     */
+    public function getFinancialStatus()
+    {
+        return $this->financialStatus;
+    }
+
+    /**
+     * Set customerNote
+     *
+     * @param string $customerNote
+     *
+     * @return ShopifyOrder
+     */
+    public function setCustomerNote($customerNote)
+    {
+        $this->customerNote = $customerNote;
+
+        return $this;
+    }
+
+    /**
+     * Get customerNote
+     *
+     * @return string
+     */
+    public function getCustomerNote()
+    {
+        return $this->customerNote;
+    }
+
+    /**
+     * Set staffNote
+     *
+     * @param string $staffNote
+     *
+     * @return ShopifyOrder
+     */
+    public function setStaffNote($staffNote)
+    {
+        $this->staffNote = $staffNote;
+
+        return $this;
+    }
+
+    /**
+     * Get staffNote
+     *
+     * @return string
+     */
+    public function getStaffNote()
+    {
+        return $this->staffNote;
+    }
+
+    /**
+     * Set totalSpend
+     *
+     * @param float $totalSpend
+     *
+     * @return ShopifyOrder
+     */
+    public function setTotalSpend($totalSpend)
+    {
+        $this->totalSpend = $totalSpend;
+
+        return $this;
+    }
+
+    /**
+     * Get totalSpend
+     *
+     * @return float
+     */
+    public function getTotalSpend()
+    {
+        return $this->totalSpend;
+    }
+
+    /**
+     * Set city
+     *
+     * @param string $city
+     *
+     * @return ShopifyOrder
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return string
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Set zip
+     *
+     * @param string $zip
+     *
+     * @return ShopifyOrder
+     */
+    public function setZip($zip)
+    {
+        $this->zip = $zip;
+
+        return $this;
+    }
+
+    /**
+     * Get zip
+     *
+     * @return string
+     */
+    public function getZip()
+    {
+        return $this->zip;
+    }
+
+    /**
+     * Set orderAddress
+     *
+     * @param string $orderAddress
+     *
+     * @return ShopifyOrder
+     */
+    public function setOrderAddress($orderAddress)
+    {
+        $this->orderAddress = $orderAddress;
+
+        return $this;
+    }
+
+    /**
+     * Get orderAddress
+     *
+     * @return string
+     */
+    public function getOrderAddress()
+    {
+        return $this->orderAddress;
+    }
+
+    /**
+     * Set countryCode
+     *
+     * @param string $countryCode
+     *
+     * @return ShopifyOrder
+     */
+    public function setCountryCode($countryCode)
+    {
+        $this->countryCode = $countryCode;
+
+        return $this;
+    }
+
+    /**
+     * Get countryCode
+     *
+     * @return string
+     */
+    public function getCountryCode()
+    {
+        return $this->countryCode;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return ShopifyOrder
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set productCount
+     *
+     * @param integer $productCount
+     *
+     * @return ShopifyOrder
+     */
+    public function setProductCount($productCount)
+    {
+        $this->productCount = $productCount;
+
+        return $this;
+    }
+
+    /**
+     * Get productCount
+     *
+     * @return integer
+     */
+    public function getProductCount()
+    {
+        return $this->productCount;
     }
 }

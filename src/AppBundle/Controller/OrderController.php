@@ -27,14 +27,9 @@ class OrderController extends DefaultController
             exit;
         }
         $em = $this->getDoctrine()->getManager();
-//        $orders = $this->getRepository('ShopifyOrder')->findAll();
-//        foreach ($orders as $order){
-//            $em->remove($order);
-//        }
-//        $em->flush();
-//        var_dump($shop->getUrl());exit;
 
-        for($i=0;$i<100;$i++){
+
+        for($i=110;$i<120;$i++){
             $ch = curl_init();
 //            var_dump($shop->getUrl().'/admin/orders.json?created_at_min=2019-05-24T00:00:00+02:00&limit=250&status=any&page='.$i);exit;
 //            curl_setopt($ch, CURLOPT_URL, "https://3623623bf53c36da004aa47174a0511b:cd7b56023e4c8109ca530baad06f1c36@hillmande.myshopify.com/admin/orders/count.json?created_at_min=2019-05-24T00:00:00+02:00&limit=250&status=any");
@@ -89,14 +84,18 @@ class OrderController extends DefaultController
                         $orderObj->setNumber($order['order_number']);
                         $orderObj->setCancelledAt($order['cancelled_at']);
                         $orderObj->setFulfillmentStatus($order['fulfillment_status']);
+                        $orderObj->setFinancialStatus($order['financial_status']);
                         $orderObj->setAcceptMarketing($customer['accepts_marketing']);
                         $orderObj->setAmount($order['total_price']);
                         $orderObj->setCustomerId((string)$customer['id']);
                         $orderObj->setFirstname($customer['first_name']);
                         $orderObj->setLastname($customer['last_name']);
                         $orderObj->setOrderCount($customer['orders_count']);
+                        $orderObj->setTotalSpend($customer['total_spent']);
                         $orderObj->setLastOrderId((string)$customer['last_order_id']);
                         $orderObj->setEmail($customer['email']);
+                        $orderObj->setCustomerNote($customer['note']);
+                        $orderObj->setStaffNote($order['note']);
                         $orderObj->setOrderUrl($order['order_status_url']);
                         $orderObj->setOrderName($order['name']);
                         $orderObj->setTags($order['tags']);
@@ -107,7 +106,33 @@ class OrderController extends DefaultController
                         }
                         if(key_exists('shipping_address',$order)){
                             $orderObj->setShippingCountry($order['shipping_address']['country']);
+                            $orderObj->setCity($order['shipping_address']['city']);
+                            $orderObj->setZip($order['shipping_address']['zip']);
+
+                            $address = $order['shipping_address']['address1'];
+
+                            if($order['shipping_address']['address2'] != ''){
+                                $address.= ', '.$order['shipping_address']['address2'];
+                            }
+                            $orderObj->setOrderAddress($address);
+                            $orderObj->setCountryCode($order['shipping_address']['country_code']);
                         }
+
+                        $description = "";
+                        $totalProducts = 0;
+
+                        if(key_exists('line_items',$order)){
+
+                            foreach ($order['line_items'] as $line_item) {
+                                $description.= $line_item['title']. " - ".$line_item['quantity']."\n";
+                                $totalProducts += $line_item['quantity'];
+
+                            }
+                        }
+
+                        $orderObj->setDescription($description);
+                        $orderObj->setProductCount($totalProducts);
+
 
                         $mainPhoneNumber = $order['phone'];
 
@@ -159,7 +184,6 @@ class OrderController extends DefaultController
                 var_dump($i);
             }
         }
-        exit;
 
     }
 
