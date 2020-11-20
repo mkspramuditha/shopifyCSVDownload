@@ -56,6 +56,13 @@ class Shop
      */
     private $numberCorrection;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="all_orders_sheet_name", type="string", nullable=true)
+     */
+    private $allOrdersSheetName;
+
 
 
 
@@ -188,5 +195,29 @@ class Shop
     public function getNumberCorrection()
     {
         return $this->numberCorrection;
+    }
+
+    /**
+     * Set allOrdersSheetName
+     *
+     * @param boolean $allOrdersSheetName
+     *
+     * @return Shop
+     */
+    public function setAllOrdersSheetName($allOrdersSheetName)
+    {
+        $this->allOrdersSheetName = $allOrdersSheetName;
+
+        return $this;
+    }
+
+    /**
+     * Get allOrdersSheetName
+     *
+     * @return boolean
+     */
+    public function getAllOrdersSheetName()
+    {
+        return $this->allOrdersSheetName;
     }
 }

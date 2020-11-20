@@ -38,13 +38,25 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row mb-5">
                     <h2>Export to Google Sheet</h2>
                     <div class="col-md-6">
                         <a class="btn btn-success" href="{{ url('csv_export')}}">Export</a>
                     </div>
-                    <div class="col-md-6">
-                        <a class="btn btn-success" href="{{ url('all_orders_export')}}">Export All Orders</a>
+                </div>
+                <h2>Export All Orders</h2>
+                <div class="row">
+                    <div class="col-md-2">
+                        <a class="btn btn-success" href="{{ url('all_orders_export',{shop:1})}}">BG</a>
+                    </div>
+                    <div class="col-md-2">
+                        <a class="btn btn-success" href="{{ url('all_orders_export',{shop:2})}}">DE</a>
+                    </div>
+                    <div class="col-md-2">
+                        <a class="btn btn-success" href="{{ url('all_orders_export',{shop:3})}}">RO</a>
+                    </div>
+                    <div class="col-md-2">
+                        <a class="btn btn-success" href="{{ url('all_orders_export',{shop:4})}}">INTL</a>
                     </div>
                 </div>
             </div>

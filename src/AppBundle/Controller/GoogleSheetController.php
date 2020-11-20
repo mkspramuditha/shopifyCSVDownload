@@ -172,10 +172,15 @@ class GoogleSheetController extends DefaultController
      */
     public function googleSheetExportAction(Request $request){
 
-        $shops = $this->getRepository('Shop')->findAll();
-        foreach ($shops as $shop){
-            $this->updateOrders($shop->getId(), $request);
+        $shopId = $request->get('shop');
+        if($shopId == null){
+            var_dump("shop id not given");
+            exit;
         }
+        $shop = $this->getRepository('Shop')->find($shopId);
+
+        $this->updateOrders($shop->getId(), $request);
+
 
         $client = $this->getClient();
         $service = new Google_Service_Sheets($client);
@@ -184,7 +189,7 @@ class GoogleSheetController extends DefaultController
         $spreadsheetId = '1Rmum93YCVGpMmLZHMUDdRlhMfQ8wl3wgmLGJUKseYO4';
 
 
-        $range = 'Sheet1!A1:Z';
+        $range = $shop->getAllOrdersSheetName().'!A1:Z';
 
         $values = [
             [
@@ -217,16 +222,12 @@ class GoogleSheetController extends DefaultController
             ]
         ];
 
-        $shops = $this->getRepository('Shop')->findAll();
-        $shopMap = array();
-        foreach ($shops as $shop){
-            $shopMap[$shop->getId()] = $shop->getName();
-        }
+
 
 //        $orders = $this->getRepository('ShopifyOrder')->findBy(array(),array(),2000);
-        $orders = $this->getRepository('ShopifyOrder')->findAll();
+        $orders = $this->getRepository('ShopifyOrder')->findBy(array('shop'=>$shopId));
 //        var_dump(count($orders));exit;
-        $i = 0;
+        $i = 2;
         foreach ($orders as $order){
 
             var_dump($i);
@@ -240,10 +241,10 @@ class GoogleSheetController extends DefaultController
             }
 //            var_dump($order->getPhone());exit;
             $values[] = [
-                $shopMap[$order->getShop()],
+                $shop->getName(),
                 $order->getOrderName(),
                 $order->getCreatedAt(),
-                $order->getFulfillmentStatus() == null ? "" : $order->getFulfillmentStatus(),
+                $order->getFulfillmentStatus() == null ? "Unfulfilled" : $order->getFulfillmentStatus(),
                 $order->getFinancialStatus() == null ? "" : $order->getFinancialStatus(),
                 $order->getOrderUrl(),
                 $order->getAmount(),
@@ -253,7 +254,7 @@ class GoogleSheetController extends DefaultController
                 $order->getCustomerNote() == null ? "" : $order->getCustomerNote(),
                 $order->getStaffNote() == null ? "" : $order->getStaffNote(),
                 $order->getEmail() == null ? "" : $order->getEmail(),
-                "",
+                '=VLOOKUP(X'.$i.',Couriers!$B$4:$C,2,TRUE)',
                 $order->getOrderCount(),
                 $order->getTotalSpend(),
                 $phoneNumber,
@@ -295,7 +296,7 @@ class GoogleSheetController extends DefaultController
 
         $clearBody = new \Google_Service_Sheets_ClearValuesRequest();
 
-        $response = $service->spreadsheets_values->clear($spreadsheetId,'Sheet1', $clearBody);
+        $response = $service->spreadsheets_values->clear($spreadsheetId,$range, $clearBody);
 
         $result = $service->spreadsheets_values->update(
             $spreadsheetId,
