@@ -76,6 +76,13 @@ class ShopifyOrder
     private $waybillId;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="tracking_url", type="string",length=500, nullable=true)
+     */
+    private $trackingUrl;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="created_at", type="string", length=255)
@@ -1064,5 +1071,29 @@ class ShopifyOrder
     public function getProductCount()
     {
         return $this->productCount;
+    }
+
+    /**
+     * Set trackingUrl
+     *
+     * @param string $trackingUrl
+     *
+     * @return ShopifyOrder
+     */
+    public function setTrackingUrl($trackingUrl)
+    {
+        $this->trackingUrl = $trackingUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get trackingUrl
+     *
+     * @return string
+     */
+    public function getTrackingUrl()
+    {
+        return $this->trackingUrl;
     }
 }

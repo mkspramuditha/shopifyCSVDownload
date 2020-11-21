@@ -29,7 +29,7 @@ class OrderController extends DefaultController
         $em = $this->getDoctrine()->getManager();
 
 
-        for($i=110;$i<120;$i++){
+        for($i=100;$i<130;$i++){
             $ch = curl_init();
 //            var_dump($shop->getUrl().'/admin/orders.json?created_at_min=2019-05-24T00:00:00+02:00&limit=250&status=any&page='.$i);exit;
 //            curl_setopt($ch, CURLOPT_URL, "https://3623623bf53c36da004aa47174a0511b:cd7b56023e4c8109ca530baad06f1c36@hillmande.myshopify.com/admin/orders/count.json?created_at_min=2019-05-24T00:00:00+02:00&limit=250&status=any");
@@ -101,6 +101,7 @@ class OrderController extends DefaultController
                         $orderObj->setTags($order['tags']);
                         if(is_array($order['fulfillments']) && count($order['fulfillments']) > 0){
                             $orderObj->setWaybillId($order['fulfillments'][0]['tracking_number']);
+                            $orderObj->setTrackingUrl($order['fulfillments'][0]['tracking_url']);
                         }else{
                             $orderObj->setWaybillId("");
                         }

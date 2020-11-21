@@ -189,7 +189,7 @@ class GoogleSheetController extends DefaultController
         $spreadsheetId = '1Rmum93YCVGpMmLZHMUDdRlhMfQ8wl3wgmLGJUKseYO4';
 
 
-        $range = $shop->getAllOrdersSheetName().'!A1:Z';
+        $range = $shop->getAllOrdersSheetName().'!A1:AA';
 
         $values = [
             [
@@ -202,7 +202,8 @@ class GoogleSheetController extends DefaultController
                 "Order value",
                 "ORDER TAGS",
                 "Staff who made the order",
-                "tracking number",
+                "Tracking number",
+                "Tracking url",
                 "Order notes by customer",
                 "Order notes by staff",
                 "Customer email",
@@ -251,6 +252,7 @@ class GoogleSheetController extends DefaultController
                 $order->getTags(),
                 "",
                 $order->getWaybillId() == null ? "" : $order->getWaybillId(),
+                $order->getTrackingUrl() == null ? "" : $order->getTrackingUrl(),
                 $order->getCustomerNote() == null ? "" : $order->getCustomerNote(),
                 $order->getStaffNote() == null ? "" : $order->getStaffNote(),
                 $order->getEmail() == null ? "" : $order->getEmail(),
@@ -481,6 +483,7 @@ class GoogleSheetController extends DefaultController
                         $orderObj->setTags($order['tags']);
                         if(is_array($order['fulfillments']) && count($order['fulfillments']) > 0){
                             $orderObj->setWaybillId($order['fulfillments'][0]['tracking_number']);
+                            $orderObj->setTrackingUrl($order['fulfillments'][0]['tracking_url']);
                         }else{
                             $orderObj->setWaybillId("");
                         }
