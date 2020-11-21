@@ -231,7 +231,6 @@ class GoogleSheetController extends DefaultController
         $i = 2;
         foreach ($orders as $order){
 
-            var_dump($i);
             if($order->getPhone() != null){
                 $phoneNumber = $this->getPhoneNumber($order->getPhone(),$this->getPhonePrefix(strtolower($order->getShippingCountry())));
             }else if($order->getCustomerPhone()){
@@ -283,6 +282,7 @@ class GoogleSheetController extends DefaultController
             $i+=1;
         }
 
+        var_dump($i);
 
         $updateBody = new Google_Service_Sheets_ValueRange([
             'range' => $range,
@@ -297,7 +297,7 @@ class GoogleSheetController extends DefaultController
         ];
 
         $clearBody = new \Google_Service_Sheets_ClearValuesRequest();
-
+        var_dump("google sheet cleared");
         $response = $service->spreadsheets_values->clear($spreadsheetId,$range, $clearBody);
 
         $result = $service->spreadsheets_values->update(
@@ -306,7 +306,7 @@ class GoogleSheetController extends DefaultController
             $updateBody,
             $params
         );
-
+        var_dump("data added");
         return $this->redirectToRoute('dashboard');
     }
 
