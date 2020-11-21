@@ -228,12 +228,13 @@ class GoogleSheetController extends DefaultController
 //        $orders = $this->getRepository('ShopifyOrder')->findBy(array(),array(),2000);
         $orders = $this->getRepository('ShopifyOrder')->findBy(array('shop'=>$shopId));
 //        var_dump(count($orders));exit;
+        ini_set('memory_limit','2048M');
+
         $i = 2;
         foreach ($orders as $order){
 
-            if($i <20000){
-                var_dump($i);
-            }
+            var_dump($i);
+
             if($order->getPhone() != null){
                 $phoneNumber = $this->getPhoneNumber($order->getPhone(),$this->getPhonePrefix(strtolower($order->getShippingCountry())));
             }else if($order->getCustomerPhone()){
