@@ -231,6 +231,10 @@ class GoogleSheetController extends DefaultController
         $i = 2;
         foreach ($orders as $order){
 
+            if($i % 100 == 0){
+                var_dump($i);
+            }
+
             if($order->getPhone() != null){
                 $phoneNumber = $this->getPhoneNumber($order->getPhone(),$this->getPhonePrefix(strtolower($order->getShippingCountry())));
             }else if($order->getCustomerPhone()){
