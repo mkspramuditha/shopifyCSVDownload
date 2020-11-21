@@ -306,7 +306,7 @@ class GoogleSheetController extends DefaultController
             $updateBody,
             $params
         );
-        var_dump($result);
+
         return $this->redirectToRoute('dashboard');
     }
 
