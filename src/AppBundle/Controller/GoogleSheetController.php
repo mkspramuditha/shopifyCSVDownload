@@ -259,7 +259,7 @@ class GoogleSheetController extends DefaultController
                 $order->getCustomerNote() == null ? "" : $order->getCustomerNote(),
                 $order->getStaffNote() == null ? "" : $order->getStaffNote(),
                 $order->getEmail() == null ? "" : $order->getEmail(),
-                '=VLOOKUP(Y'.$i.',Couriers!$B$4:$C,2,TRUE)',
+                '=VLOOKUP(Y'.$i.',Couriers!$B$4:$C,2,FALSE)',
                 $order->getOrderCount(),
                 $order->getTotalSpend(),
                 $phoneNumber,
